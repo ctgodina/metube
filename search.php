@@ -193,7 +193,7 @@
       <tr valign="top">     
         
         <td>
-          <a href="viewprofile.php?uid=<?php echo $uid; ?>"><?php echo $uname; ?></a> 
+          <a href="viewprofile.php?uid=<?php echo $uid; ?>&&uname=<?php echo $uname;?>"><?php echo $uname; ?></a> 
         </td>        
       </tr>
             <?php
