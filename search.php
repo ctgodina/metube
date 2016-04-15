@@ -130,15 +130,23 @@
       {
        $query = "SELECT * from media where title LIKE '%".$_GET['search_query']."%';"; 
        $_SESSION['query']=$_GET['search_query'];
+       $userquery = "SELECT * from account where username LIKE '%".$_GET['search_query']."%';"; 
+
       }
       else
       {
+        $userquery = "SELECT * from account where username LIKE '%".$_SESSION['query']."%';"; 
         $query = "SELECT * from media where title LIKE '%".$_SESSION['query']."%';"; 
       }
-     # echo $query;
+
       $result = mysql_query( $query );
       if (!$result){
          die ("Could not query the media table in the database: <br />". mysql_error());
+      }
+
+      $uresult = mysql_query( $userquery );
+      if (!$result){
+         die ("Could not query the account table in the database: <br />". mysql_error());
       }
     ?>
         
@@ -166,6 +174,30 @@
       </tr>
             <?php
         }
+      ?>
+    </table>
+
+
+
+
+    <h2>User Results</h2>
+    <table width="50%" cellpadding="0" cellspacing="0">
+      <?php
+
+        while ($result_row = mysql_fetch_row($uresult)) //filename, username, type, mediaid, path
+        { 
+          $uid = $result_row[0];
+          $uname = $result_row[1];
+      ?>
+      <tr valign="top">     
+        
+        <td>
+          <a href="viewprofile.php?uid=<?php echo $uid; ?>"><?php echo $uname; ?></a> 
+        </td>        
+      </tr>
+            <?php
+        }
+
       ?>
     </table>
     </div>
