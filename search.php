@@ -18,6 +18,10 @@
   <?php 
     session_start();
     include_once "function.php";
+    if(empty($_SESSION['username'])){
+      Print '<script>alert("User not found");</script>'; //Prompts the user
+      Print '<script>window.location.assign("index.php");</script>';
+    }
     #$_SESSION['query']="null_null_null";
   ?>
   <div id="main">

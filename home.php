@@ -17,7 +17,10 @@
 <body>
   <?php 
     session_start();
-
+    if(empty($_SESSION['username'])){
+      Print '<script>alert("User not found");</script>'; //Prompts the user
+      Print '<script>window.location.assign("index.php");</script>';
+    }
   ?>
   <div id="main">
     <div id="header">
