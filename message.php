@@ -11,6 +11,13 @@
 		 body {
 			background-color: black;
 		}
+    textarea.top{
+      width:100%;
+    }
+    textarea.body{
+      width:100%;
+      height:100px;
+    }
   </style>
 </head>
 
@@ -53,9 +60,10 @@
       <div class="sidebar">
         <!-- insert your sidebar items here -->
 
-        <h3>Suggestions</h3>
+        <h3>Mail</h3>
         <ul>
-          <li>coming soon</li>
+          <li><a>Inbox</a></li>
+          <li><a>Sent</a></li>
 
         </ul>
         <!--<h3>Search</h3>
@@ -68,22 +76,16 @@
       </div>
       <div id="content">
         <!-- insert the page content here -->
-		<h1>Select a file to upload</h1>
-    <form method="post" action="media_upload_process.php" enctype="multipart/form-data" >
-
-      Enter Title: <input type="text" name = "title"></input>
-   
-      <p style="margin:0; padding:0">
-      <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
-       Add a Media: <label style="color:#663399"><em> (Each file limit 10M)</em></label><br/>
-       <input  name="file" type="file" size="50" />
-      
-      <input value="Upload" name="submit" type="submit" />
-      </p>
-     
-                  
-    </form>
-
+		    <h1>Message Center</h1>
+        <textarea class="top" name="recipient" form="sendmsg" placeholder="TO"></textarea>
+        <br></br>
+        <textarea class="top" name="subject" form="sendmsg" placeholder="SUBJECT"></textarea>
+        <br></br>
+        <textarea class="body" name="msg" form="sendmsg" placeholder="ENTER MESSAGE"></textarea>
+        <form method="post" action="message.php" 
+        id="sendmsg">
+          <input placeholder="Send Message" name="submit" type="submit">
+        </form>
 		
       </div>
     </div>
