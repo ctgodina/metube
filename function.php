@@ -51,10 +51,20 @@ function insert_message($sender, $receiver, $subject, $msg){
 	if(!$result){
 		die("insert_message failed.<br />". mysql_error());
 	}
+	else return 1;
+}
+
+function add_friend($fname1, $fname2){
+	$fquery = "insert into friends (fname1, fname2) values ('".$fname1."','".$fname2."');";
+	$fresult = mysql_query($fquery);
+	if(!$fresult){
+		die("add failed.<br />". mysql_error());
+	}
 	else {
 		return 1;
 	}
 }
+
 
 // function comment_by_media($mediaid){
 // 	$query = "select content from comments where media_id=$mediaid";

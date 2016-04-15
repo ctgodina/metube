@@ -57,7 +57,6 @@
     </div>
     <div id="site_content">
       <div class="sidebar">
-        <!-- insert your sidebar items here -->
 
         <h3>Comments</h3>
         <ul>
@@ -103,12 +102,6 @@
         }
         ?>
 
-        <!--<form method="post" action="#" id="search_form">
-          <p>
-            <input class="search" type="text" name="search_field" value="Enter keywords....." />
-      
-          </p>
-        </form>-->
       </div>
       <div id="content">
         <!-- insert the page content here -->
@@ -118,6 +111,18 @@
         <source src="movie.ogg" type="video/ogg">
         Your browser does not support the video tag.
       </video>
+    <div class="right">
+    <form method="post" action=
+        
+        <?php echo "request.php?".
+        "id=".$_SESSION['uid'];
+        ?>
+
+      > 
+           
+      <input value="Add firend" name="submit" type="submit">
+    </form>
+    </div>
    
 
     <div id="upload result">
@@ -149,7 +154,7 @@
           $title = $result_row[1];
           $type = $result_row[3];
       ?>
-             <tr valign="top">      
+      <tr valign="top">      
         
         <td>
           <a href="viewprofile.php?id=<?php echo $mediaid; ?>&&title=<?php echo $title;?>&&path=<?php echo $filenpath;?>&&type=<?php echo $type;?>"><?php echo $title;
