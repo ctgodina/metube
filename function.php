@@ -39,6 +39,23 @@ function insert_comment($mediaid, $username, $comment){
 	}
 }
 
+function insert_message($sender, $receiver, $subject, $msg){
+	$query = "insert into message (sender, receiver, subject, msg) values (";
+	$query.= "(select id from account where username='$sender'),";
+	$query.= "(select id from account where username='$receiver'),";
+	$query.= "'$subject',";
+	$query.= "'$msg')";
+
+	$result = mysql_query($query);
+
+	if(!$result){
+		die("insert_message failed.<br />". mysql_error());
+	}
+	else {
+		return 1;
+	}
+}
+
 // function comment_by_media($mediaid){
 // 	$query = "select content from comments where media_id=$mediaid";
 // 	$result = mysql_query($query);
