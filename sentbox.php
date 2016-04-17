@@ -18,6 +18,9 @@
       width:100%;
       height:100px;
     }
+    td {
+      max-width: 100px;
+    }
   </style>
 </head>
 
