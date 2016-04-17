@@ -42,6 +42,8 @@
               <?php
                 echo $_SESSION['username'];
               ?>
+              <br/>
+              <a style="color:white;" href="editprofile.php">edit profile</a>
             </h2>
     			</div>
         </div>
@@ -54,6 +56,7 @@
           <li><a href="browse.php">Browse</a></li>
           <li><a href="upload.php">Upload</a></li>
           <li><a href="message.php">Messages</a></li>
+          <li><a href="playlist.php">Playlists</a></li>          
           <li><div class="right"><form action="search.php" method="get"><input type="text" name="search_query" placeholder="search" required><input value="Search" name="submit_search" type="submit" /></form></div></li>
           <li><a href="logout.php">Logout</a></li>
         </ul>

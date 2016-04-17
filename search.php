@@ -30,12 +30,14 @@
         <div id="logo_text">
     			<div class="right">				
     				<img src="images/metube_logo.png" alt="Clemson" style="width:191px;height:60px;">
-             <h2> Welcome
+             <h2> Welcome 
               <?php
                 echo $_SESSION['username'];
               ?>
+              <br/>
+              <a style="color:white;" href="editprofile.php">edit profile</a>
             </h2>
-            
+            <br/>
     			</div>
         </div>
       </div>

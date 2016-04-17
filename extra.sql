@@ -27,7 +27,6 @@ END;
 delimiter ;
 /* END TRIGGER */
 
-
 /*UNIQUE INDEX eliminate multiple entries*/
 CREATE UNIQUE INDEX uniqueblocks 
 ON blocked (uname1, uname2)

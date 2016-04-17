@@ -33,6 +33,8 @@
               <?php
                 echo $_SESSION['username'];
               ?>
+              <br/>
+              <a style="color:white;" href="editprofile.php">edit profile</a>
             </h2>
     			</div>
         </div>
