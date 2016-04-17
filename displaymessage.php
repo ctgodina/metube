@@ -83,7 +83,19 @@
       ?>
     		<h1>Displaying: <? echo $subject; ?></h1><br/><br/>
         <p><? echo $message; ?></p><br/><br/>
-        <a href="message.php?to=<? if($_GET['risme']==1) echo $sendid; else echo $recid;?>" class="button">Reply<a/>
+        <?php 
+        if($_GET['risme']==1) 
+          $id = $sendid;
+        else $id = $recid;
+        $query = "select username from account where id=$id";
+        $result = mysql_query($query);
+        if(!$result){
+          die("displaymessage failed getting uname:", mysql_error());
+        }
+        $result_row = mysql_fetch_array($result));
+        $username = $result_row[0];
+        ?>
+        <a href="message.php?to=<? $username ?>" class="button">Reply<a/>
       </div>
     </div>
     <div id="footer">
