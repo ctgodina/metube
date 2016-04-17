@@ -8,9 +8,9 @@
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="css/style2.css" title="style" />
   <style>
-		 body {
-			background-color: black;
-		}
+     body {
+      background-color: black;
+    }
     textarea.top{
       width:100%;
     }
@@ -29,25 +29,19 @@
       Print '<script>alert("User not found");</script>'; //Prompts the user
       Print '<script>window.location.assign("index.php");</script>';
     }
-    if(!empty($_POST['submit'])){
-      if(insert_message($_SESSION['username'], $_POST['receiver'], $_POST['subject'], $_POST['msg'])){
-        Print '<script>alert("Sent message to: '.$_POST['receiver'].'");</script>'; //Prompts the user
-        Print '<script>window.location.assign("message.php");</script>';
-      }
-    }
   ?>
   <div id="main">
     <div id="header">
       <div id="logo">
         <div id="logo_text">
-    			<div class="right">				
-    				<img src="images/metube_logo.png" alt="Clemson" style="width:191px;height:60px;">
+          <div class="right">       
+            <img src="images/metube_logo.png" alt="Clemson" style="width:191px;height:60px;">
              <h2> Welcome
               <?php
                 echo $_SESSION['username'];
               ?>
             </h2>
-    			</div>
+          </div>
         </div>
       </div>
 
@@ -82,16 +76,54 @@
       </div>
       <div id="content">
         <!-- insert the page content here -->
-		    <h1>Received Messages</h1>
-        <textarea class="top" name="receiver" form="sendmsg" placeholder="TO"></textarea>
-        <br></br>
-        <textarea class="top" name="subject" form="sendmsg" placeholder="SUBJECT"></textarea>
-        <br></br>
-        <textarea class="body" name="msg" form="sendmsg" placeholder="ENTER MESSAGE"></textarea>
-        <form method="post" action="message.php" 
-        id="sendmsg">
-          <input name="submit" type="submit">
-        </form>
+        <h1>Received Messages</h1>
+       
+        <?php
+        $query = "SELECT receiver, subject, msg from message where receiver=";
+        $query.= "(select id from account where username='".$_SESSION['username']."')";
+        $result = mysql_query( $query );
+        if (!$result){
+           die ("Failed to retrieve sent messages: <br />". mysql_error());
+        }
+        ?>
+          
+        <table width="50%" cellpadding="0" cellspacing="0">
+        <tr>
+          <th>Receiver</th>
+          <th>Subject</th>
+          <th>Content</th>
+        </tr>
+        <?php
+          while ($result_row = mysql_fetch_row($result)) 
+          {
+            //Grab receiver from id.
+            $sendid = $result_row[0];
+            $subj = $result_row[1];
+            $mesj = $result_row[2];
+
+            $userquery = "SELECT username from account where id = '$sendid'";
+            $userresult = mysql_query($userquery);
+            if(!$userresult){
+              die("Retrieving receiver username failed: <br/>". mysql_error());
+            }
+            $sdruname = mysql_fetch_row($userresult);
+            $sdruname = $sdruname[0];
+        ?>
+        <tr valign="top">
+          <td>
+            <a href="message.php?to=<? echo $sdruname; ?>"><?php echo $sdruname; ?></a>
+          </td>        
+          <td>
+            <?php echo $subj; ?>
+          </td>
+          <td>
+            <?php echo $mesj; ?>
+          </td>
+        </tr>
+              <?php
+          }
+        ?>
+        </table>
       </div>
     </div>
     <div id="footer">

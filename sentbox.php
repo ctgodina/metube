@@ -29,12 +29,6 @@
       Print '<script>alert("User not found");</script>'; //Prompts the user
       Print '<script>window.location.assign("index.php");</script>';
     }
-    // if(!empty($_POST['submit'])){
-    //   if(insert_message($_SESSION['username'], $_POST['receiver'], $_POST['subject'], $_POST['msg'])){
-    //     Print '<script>alert("Sent message to: '.$_POST['receiver'].'");</script>'; //Prompts the user
-    //     Print '<script>window.location.assign("message.php");</script>';
-    //   }
-    // }
   ?>
   <div id="main">
     <div id="header">
