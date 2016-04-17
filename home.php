@@ -79,18 +79,24 @@
 		</video>
     <?php
       $i = 0;
+      $bool = false;
       $query = "Select fname2 from friends where fname1 = '".$_SESSION['username']."';";
       $result = mysql_query($query) or die("Could not access friends table".mysql_error());
       while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
         $friendsname[] = $row[0];
         $i++;
+        $bool = true;
       }
     ?>
 
     <h1>New Content feed</h1>
     <ul>
+    <?php
+      if($bool){
+    ?>
       <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
       <?php
+
         echo "<div STYLE='height: 500px; width: 400px; font-size: 12px; overflow: auto;'>";
           $i=0;
         while($i<count($friendsname))
@@ -114,6 +120,9 @@
         }
         echo "</div>";
       ?>
+    <?php
+      }      
+    ?>
     </ul>
    
       </div>
