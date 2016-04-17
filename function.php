@@ -82,10 +82,12 @@ function insert_message($sender, $receiver, $subject, $msg){
 }
 
 function add_friend($fname1, $fname2){
+	//friends has a unique index so no duplicate entries allowed
+	//ufindex
 	$fname1 = test_input($fname1);
 	$fname2 = test_input($fname2);
 
-	$fquery = "insert into friends (fname1, fname2) values ('".$fname1."','".$fname2."');";
+	$fquery = "insert ignore into friends (fname1, fname2) values ('".$fname1."','".$fname2."');";
 	$fresult = mysql_query($fquery);
 	if(!$fresult){
 		die("add failed.<br />". mysql_error());

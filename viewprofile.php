@@ -121,7 +121,7 @@
 
       > 
            
-      <input value="Add firend" name="submit" type="submit">
+      <input value="Add friend" name="submit" type="submit">
     </form>
     </div>
    

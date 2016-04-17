@@ -161,6 +161,30 @@
         }
       ?>
     </table>
+
+    <h2>My Friends</h2>
+    <table width="50%" cellpadding="0" cellspacing="0">
+    <tr>
+      <th>Username</th>
+      <th>Actions</th>
+    </tr>
+    <?php
+    $query = "SELECT * from friends where fname1='".$_SESSION['username']."'";
+    $result = mysql_query($query);
+
+    while($result_row = mysql_fetch_array($result)){
+      $friend = $result_row[1];
+      ?>
+
+    <tr>
+      <td><a href="viewprofile.php?uname=<?php echo $friend;?>"><?echo $friend; ?></a></td>
+      <td><a href="message.php?to=<? echo $friend; ?>">Send Message</a></td>
+    </tr>
+
+    <?php  
+    }
+    ?>
+    </table>
     </div>
 
 
