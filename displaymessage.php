@@ -90,7 +90,7 @@
         $query = "select username from account where id=$id";
         $result = mysql_query($query);
         if(!$result){
-          die("displaymessage failed getting uname:", mysql_error());
+          die("displaymessage failed getting uname:".mysql_error());
         }
         $result_row = mysql_fetch_array($result));
         $username = $result_row[0];
