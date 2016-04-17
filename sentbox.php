@@ -93,7 +93,7 @@
 
         <?php
 
-        $query = "SELECT subject, msg from message where sender=";
+        $query = "SELECT receiver, subject, msg from message where sender=";
         $query.= "(select id from account where username='".$_SESSION['username']."')";
         $result = mysql_query( $query );
         if (!$result){
@@ -104,11 +104,29 @@
         <table width="50%" cellpadding="0" cellspacing="0">
         <?php
           while ($result_row = mysql_fetch_row($result)) 
-          { 
-            $subj = $result_row[0];
-            $mesj = $result_row[1];
+          {
+            //Grab receiver from id.
+            $recid = $result_row[0];
+            $subj = $result_row[1];
+            $mesj = $result_row[2];
+
+            $userquery = "SELECT username from account where id = '$recid'";
+            $userresult = mysql_query($userquery);
+            if(!userresult){
+              die("Retrieving receiver username failed: <br/>". mysql_error());
+            }
+            $recuname = mysql_fetch_row($userresult);
+            $recuname = $recuname[0];
         ?>
-        <tr valign="top">        
+        <tr>
+          <th>Receiver</th>
+          <th>Subject</th>
+          <th>Content</th>
+        </tr>
+        <tr valign="top">
+          <td>
+            <a><?php echo $recuname; ?></a>
+          </td>        
           <td>
             <a><?php echo $subj; ?></a>
           </td>
