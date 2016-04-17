@@ -8,15 +8,17 @@
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="css/style2.css" title="style" />
   <style>
+    table {
+      table-layout: fixed;
+    }
 		 body {
 			background-color: black;
 		}
-    textarea.top{
-      width:100%;
-    }
-    textarea.body{
-      width:100%;
-      height:100px;
+    td {
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   </style>
 </head>
@@ -29,12 +31,6 @@
       Print '<script>alert("User not found");</script>'; //Prompts the user
       Print '<script>window.location.assign("index.php");</script>';
     }
-    // if(!empty($_POST['submit'])){
-    //   if(insert_message($_SESSION['username'], $_POST['receiver'], $_POST['subject'], $_POST['msg'])){
-    //     Print '<script>alert("Sent message to: '.$_POST['receiver'].'");</script>'; //Prompts the user
-    //     Print '<script>window.location.assign("message.php");</script>';
-    //   }
-    // }
   ?>
   <div id="main">
     <div id="header">
@@ -93,7 +89,7 @@
 
         <?php
 
-        $query = "SELECT receiver, subject, msg from message where sender=";
+        $query = "SELECT id, receiver, subject, msg from message where sender=";
         $query.= "(select id from account where username='".$_SESSION['username']."')";
         $result = mysql_query( $query );
         if (!$result){
@@ -111,9 +107,10 @@
           while ($result_row = mysql_fetch_row($result)) 
           {
             //Grab receiver from id.
-            $recid = $result_row[0];
-            $subj = $result_row[1];
-            $mesj = $result_row[2];
+            $msgid = $result_row[0];
+            $recid = $result_row[1];
+            $subj = $result_row[2];
+            $mesj = $result_row[3];
 
             $userquery = "SELECT username from account where id = '$recid'";
             $userresult = mysql_query($userquery);
@@ -128,7 +125,7 @@
             <a href="message.php?to=<? echo $recuname; ?>"><?php echo $recuname; ?></a>
           </td>        
           <td>
-            <?php echo $subj; ?>
+            <a href="displaymessage.php?id=<? echo $msgid; ?>&&risme=0"><? echo $subj; ?></a>
           </td>
           <td>
             <?php echo $mesj; ?>

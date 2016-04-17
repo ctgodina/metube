@@ -10,10 +10,10 @@ include_once "function.php";
 
 $username=$_SESSION['username'];
 
-// if(){
-	Print '<script>alert("$username");</script>';
-	Print '<script>window.location.assign("index.php");</script>';
-// }
+if(empty($_SESSION['username'])){
+  Print '<script>alert("User not found");</script>'; //Prompts the user
+  Print '<script>window.location.assign("index.php");</script>';
+}
 //Create Directory if doesn't exist
 if(!file_exists('uploads/')){
 	mkdir('uploads/');
