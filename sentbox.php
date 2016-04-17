@@ -125,7 +125,7 @@
         ?>
         <tr valign="top">
           <td>
-            <a href="message.php?to=$recuname"><?php echo $recuname; ?></a>
+            <a href="message.php?to=<? echo $recuname; ?>"><?php echo $recuname; ?></a>
           </td>        
           <td>
             <?php echo $subj; ?>
