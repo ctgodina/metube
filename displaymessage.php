@@ -66,7 +66,7 @@
         $message = $result_row[4];
       ?>
     		<h1>Displaying: <? echo $subject; ?></h1><br/><br/>
-        <pre><? echo $message; ?></pre>
+        <? echo $message; ?>
       </div>
     </div>
     <div id="footer">
