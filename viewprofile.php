@@ -118,8 +118,39 @@
         "id=".$_SESSION['uid'];
         ?>
       > 
-      <input value="Add friend" name="friendbutton" type="submit">
-      <input value="Block" name="blockbutton" type="submit">
+      
+      <?php
+      //CHECK IF BLOCKED
+      $query = "select * from blocked where uname1='".$_SESSION['username']."' AND";
+      $query.= " uname2='".$_SESSION['uname']."'";
+      $result = mysql_query($query);
+      if(!$result) die("viewprofile:127 failed".mysql_error());
+      if(mysql_num_rows($result)==0){
+        $blockval = "Block";
+        $blockname = "blockbutton";
+      }
+      else {
+        $blockval = "Unblock";
+        $blockname = "unblockbutton";
+      }
+
+      //CHECK IF FRIENDED
+      $fquery = "select * from friends where fname1='".$_SESSION['username']."' AND";
+      $fquery.= " fname2='".$_SESSION['uname']."'";
+      $result = mysql_query($fquery);
+      if(!$result) die("viewprofile:141 failed".mysql_error());
+      if(mysql_num_rows($result)==0){
+        $friendval = "Add Friend";
+        $friendname = "friendbutton";
+      }
+      else {
+        $friendval = "Remove Friend";
+        $friendname = "unfriendbutton";
+      }      
+      ?>
+      
+      <input value="<? echo $friendval;?>" name="<? echo $friendname;?>" type="submit">
+      <input value="<? echo $blockval;?>" name="<?echo $blockname;?>" type="submit">
     </form>
     </div>
    

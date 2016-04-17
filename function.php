@@ -90,12 +90,29 @@ function add_friend($fname1, $fname2){
 	$fquery = "insert ignore into friends (fname1, fname2) values ('".$fname1."','".$fname2."');";
 	$fresult = mysql_query($fquery);
 	if(!$fresult){
-		die("add failed.<br />". mysql_error());
+		die("add_friend failed.<br />". mysql_error());
 	}
 	else {
 		return 1;
 	}
 }
+
+function remove_friend($fname1, $fname2){
+	//friends has a unique index so no duplicate entries allowed
+	//ufindex
+	$fname1 = test_input($fname1);
+	$fname2 = test_input($fname2);
+
+	$fquery = "delete from friends where fname1='".$fname1."' and fname2='".$fname2."';";
+	$fresult = mysql_query($fquery);
+	if(!$fresult){
+		die("remove_friend failed.<br />". mysql_error());
+	}
+	else {
+		return 1;
+	}
+}
+
 
 function add_to_playlist($playlistid, $mediaid){
 	$fquery = "insert into playlist_media (playlistid, mediaid) values ('".$playlistid."','".$mediaid."');";
@@ -112,7 +129,18 @@ function block_user($user1, $user2){
 	$query = "insert ignore into blocked (uname1, uname2) values ('".$user1."','".$user2."');";
 	$result = mysql_query($query);
 	if(!$result){
-		die("blocking user failed.<br/>". mysql_error());
+		die("block_user failed.<br/>". mysql_error());
+	}
+	else {
+		return 1;
+	}
+}
+
+function unblock_user($user1, $user2){
+	$query = "delete from blocked where uname1='".$user1."' and uname2='".$user2."';";
+	$result = mysql_query($query);
+	if(!$result){
+		die("unblock_user failed.<br/>". mysql_error());
 	}
 	else {
 		return 1;

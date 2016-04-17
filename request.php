@@ -61,9 +61,16 @@
           if (isset($_POST['friendbutton'])) {
           // adding friend
             add_friend($_SESSION['username'], $_SESSION['uname']);
-          } else {
+          } 
+          else if(isset($_POST['blockbutton'])) {
           //assume blocking friend
             block_user($_SESSION['username'], $_SESSION['uname']);
+          }
+          else if(isset($_POST['unfriendbutton'])){
+            remove_friend($_SESSION['username'], $_SESSION['uname']);
+          }
+          else if(isset($_POST['unblockbutton'])){
+            unblock_user($_SESSION['username'], $_SESSION['uname']);
           }
         }
 
