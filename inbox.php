@@ -79,7 +79,7 @@
         <h1>Received Messages</h1>
        
         <?php
-        $query = "SELECT receiver, subject, msg from message where receiver=";
+        $query = "SELECT sender, subject, msg from message where receiver=";
         $query.= "(select id from account where username='".$_SESSION['username']."')";
         $result = mysql_query( $query );
         if (!$result){
