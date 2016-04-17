@@ -16,6 +16,7 @@
 
 <body>
   <?php 
+    include_once "function.php";
     session_start();
     if(empty($_SESSION['username'])){
       Print '<script>alert("User not found");</script>'; //Prompts the user
@@ -59,11 +60,13 @@
       </div>
       <div id="content">
       <?php
-        echo "Stuff";
-        $subject = "temp";
-
+        $result = fetch_message($_GET['id']);
+        $result_row = mysql_fetch_row($result);
+        $subject = $result_row[3];
+        $message = $result_row[4];
       ?>
-    		<h1>Displaying: <? echo $subject; ?></h1>
+    		<h1>Displaying: <? echo $subject; ?></h1><br/><br/>
+        <pre><? echo $message; ?></pre>
       </div>
     </div>
     <div id="footer">

@@ -30,7 +30,15 @@ function user_exist_check ($username, $password){
 }
 
 function fetch_message($msgid){
-	
+	$msgid = test_input($msgid);
+
+	$query = "select * from message where id=$msgid";
+	$result = mysql_query($query);
+
+	if(!$result){
+		die("fetch_message failed.<br />". mysql_error());
+	}
+	else return $result;
 }
 
 function insert_comment($mediaid, $username, $comment){
