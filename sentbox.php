@@ -82,16 +82,52 @@
       </div>
       <div id="content">
         <!-- insert the page content here -->
-		    <h1>Create Message</h1>
-        <textarea class="top" name="receiver" form="sendmsg" placeholder="TO"></textarea>
-        <br></br>
-        <textarea class="top" name="subject" form="sendmsg" placeholder="SUBJECT"></textarea>
-        <br></br>
-        <textarea class="body" name="msg" form="sendmsg" placeholder="ENTER MESSAGE"></textarea>
-        <form method="post" action="message.php" 
-        id="sendmsg">
-          <input name="submit" type="submit">
-        </form>
+		    <h1>Sent Messages</h1>
+       
+        <!-- DISPLAY Sent message subjects -->
+
+
+
+
+
+
+        <?php
+
+        $query = "SELECT subject, msg from message where sender=";
+        $query.= "(select id from account where username='".$_SESSION['username']."')";
+        $result = mysql_query( $query );
+        if (!$result){
+           die ("Failed to retrieve sent messages: <br />". mysql_error());
+        }
+        ?>
+          
+        <table width="50%" cellpadding="0" cellspacing="0">
+        <?php
+          while ($result_row = mysql_fetch_row($result)) 
+          { 
+            $subj = $result_row[0];
+            $mesj = $result_row[1];
+        ?>
+        <tr valign="top">        
+          <td>
+            <a><?php echo $subj; ?></a>
+          </td>
+          <td>
+            <a><?php echo $mesj; ?><a>
+          </td>
+        </tr>
+              <?php
+          }
+        ?>
+        </table>
+
+
+
+
+
+
+
+
       </div>
     </div>
     <div id="footer">

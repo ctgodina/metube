@@ -82,7 +82,7 @@
       </div>
       <div id="content">
         <!-- insert the page content here -->
-		    <h1>Create Message</h1>
+		    <h1>Received Messages</h1>
         <textarea class="top" name="receiver" form="sendmsg" placeholder="TO"></textarea>
         <br></br>
         <textarea class="top" name="subject" form="sendmsg" placeholder="SUBJECT"></textarea>
