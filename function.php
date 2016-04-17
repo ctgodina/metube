@@ -87,7 +87,18 @@ function add_to_playlist($playlistid, $mediaid){
 	$fquery = "insert into playlist_media (playlistid, mediaid) values ('".$playlistid."','".$mediaid."');";
 	$fresult = mysql_query($fquery);
 	if(!$fresult){
-		die("add failed.<br />". mysql_error());
+		die("add failed.<br/>". mysql_error());
+	}
+	else {
+		return 1;
+	}
+}
+
+function create_playlist($playlistname, $username){
+	$fquery = "insert into playlist (name, username) values ('".$playlistname."','".$username."');";
+	$fresult = mysql_query($fquery);
+	if(!$fresult){
+		die("add failed.<br/>". mysql_error());
 	}
 	else {
 		return 1;
