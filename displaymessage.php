@@ -11,6 +11,14 @@
 		 body {
 			background-color: black;
 		}
+    a.button {
+      -webkit-appearance: button;
+      -moz-appearance: button;
+      appearance: button;
+
+      text-decoration: none;
+      color: initial;
+    }
   </style>
 </head>
 
@@ -67,6 +75,7 @@
       ?>
     		<h1>Displaying: <? echo $subject; ?></h1><br/><br/>
         <? echo $message; ?>
+        <a href="http://google.com" class="button">Button here<a/>
       </div>
     </div>
     <div id="footer">
