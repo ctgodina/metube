@@ -8,6 +8,9 @@
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="css/style2.css" title="style" />
   <style>
+    table {
+      table-layout: fixed;
+    }
 		 body {
 			background-color: black;
 		}
