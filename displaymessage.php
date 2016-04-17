@@ -21,6 +21,10 @@
       text-decoration: none;
       color: initial;
     }
+    p{
+      font-size:medium;
+      word-wrap: break-word;
+    }
   </style>
 </head>
 
@@ -72,12 +76,14 @@
       <?php
         $result = fetch_message($_GET['id']);
         $result_row = mysql_fetch_row($result);
+        $sendid = $result_row[1];
+        $recid = $result_row[2];
         $subject = $result_row[3];
         $message = $result_row[4];
       ?>
     		<h1>Displaying: <? echo $subject; ?></h1><br/><br/>
-        <? echo $message; ?><br/><br/>
-        <a href="http://google.com" class="button">Button here<a/>
+        <p><? echo $message; ?></p><br/><br/>
+        <a href="message.php?to=<? if($_GET['risme']==1) echo $sendid; else echo $recid;?>" class="button">Reply<a/>
       </div>
     </div>
     <div id="footer">
