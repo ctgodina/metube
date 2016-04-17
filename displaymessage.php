@@ -92,7 +92,7 @@
         if(!$result){
           die("displaymessage failed getting uname:".mysql_error());
         }
-        $result_row = mysql_fetch_array($result));
+        $result_row = mysql_fetch_array($result);
         $username = $result_row[0];
         ?>
         <a href="message.php?to=<? $username ?>" class="button">Reply<a/>
