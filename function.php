@@ -3,6 +3,10 @@ include "mysqlClass.inc.php";
 
 
 function user_exist_check ($username, $password){
+	$username = test_input($username);
+	$password = test_input($password);
+
+
 	$query = "select * from account where username='$username'";
 	$result = mysql_query( $query );
 	if (!$result){
@@ -26,6 +30,11 @@ function user_exist_check ($username, $password){
 }
 
 function insert_comment($mediaid, $username, $comment){
+	$mediaid = test_input($mediaid);
+	$username = test_input($username);
+	$comment = test_input($comment);
+
+
 	$query = "insert into comments (content, media_id, user_id) values (";
 	$query.= "'$comment',";
 	$query.= "(select mediaid from media where mediaid=$mediaid),";
@@ -40,6 +49,12 @@ function insert_comment($mediaid, $username, $comment){
 }
 
 function insert_message($sender, $receiver, $subject, $msg){
+	$sender = test_input($sender);
+	$receiver = test_input($receiver);
+	$subject = test_input($subject);
+	$msg = test_input($msg);
+
+
 	$query = "insert into message (sender, receiver, subject, msg) values (";
 	$query.= "(select id from account where username='$sender'),";
 	$query.= "(select id from account where username='$receiver'),";
@@ -55,6 +70,9 @@ function insert_message($sender, $receiver, $subject, $msg){
 }
 
 function add_friend($fname1, $fname2){
+	$fname1 = test_input($fname1);
+	$fname2 = test_input($fname2);
+
 	$fquery = "insert into friends (fname1, fname2) values ('".$fname1."','".$fname2."');";
 	$fresult = mysql_query($fquery);
 	if(!$fresult){
@@ -79,6 +97,7 @@ function add_friend($fname1, $fname2){
 // }
 
 function user_by_id($uid){
+	$uid = test_input($uid);
 	$query = "select username from account where id=$uid";
 	$result = mysql_query($query);
 	if(!$result){
@@ -102,7 +121,9 @@ function test_input($data)
 
 function user_pass_check($username, $password)
 {
-	
+	$username = test_input($username);
+	$password = test_input($password);
+
 	$query = "select * from account where username='$username'";
 	
 	$result = mysql_query( $query );
