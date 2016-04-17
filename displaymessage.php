@@ -12,8 +12,8 @@
 			background-color: black;
 		}
     a.button {
-      size:10;
-      color: orange;
+      font-size:large;
+      background-color: orange;
       -webkit-appearance: button;
       -moz-appearance: button;
       appearance: button;
