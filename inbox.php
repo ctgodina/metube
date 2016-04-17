@@ -89,7 +89,7 @@
           
         <table width="50%" cellpadding="0" cellspacing="0">
         <tr>
-          <th>Receiver</th>
+          <th>Sender</th>
           <th>Subject</th>
           <th>Content</th>
         </tr>
