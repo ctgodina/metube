@@ -102,6 +102,11 @@
         ?>
           
         <table width="50%" cellpadding="0" cellspacing="0">
+        <tr>
+          <th>Receiver</th>
+          <th>Subject</th>
+          <th>Content</th>
+        </tr>
         <?php
           while ($result_row = mysql_fetch_row($result)) 
           {
@@ -112,17 +117,12 @@
 
             $userquery = "SELECT username from account where id = '$recid'";
             $userresult = mysql_query($userquery);
-            if(!userresult){
+            if(!$userresult){
               die("Retrieving receiver username failed: <br/>". mysql_error());
             }
             $recuname = mysql_fetch_row($userresult);
             $recuname = $recuname[0];
         ?>
-        <tr>
-          <th>Receiver</th>
-          <th>Subject</th>
-          <th>Content</th>
-        </tr>
         <tr valign="top">
           <td>
             <a><?php echo $recuname; ?></a>
