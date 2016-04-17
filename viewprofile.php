@@ -114,14 +114,12 @@
       </video>
     <div class="right">
     <form method="post" action=
-        
         <?php echo "request.php?".
         "id=".$_SESSION['uid'];
         ?>
-
       > 
-           
-      <input value="Add friend" name="submit" type="submit">
+      <input value="Add friend" name="friendbutton" type="submit">
+      <input value="Block" name="blockbutton" type="submit">
     </form>
     </div>
    

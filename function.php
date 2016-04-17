@@ -108,6 +108,17 @@ function add_to_playlist($playlistid, $mediaid){
 	}
 }
 
+function block_user($user1, $user2){
+	$query = "insert ignore into blocked (uname1, uname2) values ('".$user1."','".$user2."');";
+	$result = mysql_query($query);
+	if(!$result){
+		die("blocking user failed.<br/>". mysql_error());
+	}
+	else {
+		return 1;
+	}
+}
+
 function create_playlist($playlistname, $username){
 	$fquery = "insert into playlist (name, username) values ('".$playlistname."','".$username."');";
 	$fresult = mysql_query($fquery);

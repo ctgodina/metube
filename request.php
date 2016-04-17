@@ -54,7 +54,20 @@
     <div id="site_content">
     <h1> Added to friends </h1>
       <?php 
-        add_friend($_SESSION['username'],$_SESSION['uname']);
+        // add_friend($_SESSION['username'],$_SESSION['uname']);
+
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+          if (isset($_POST['friendbutton'])) {
+          // adding friend
+            add_friend($_SESSION['username'], $_SESSION['uname']);
+          } else {
+          //assume blocking friend
+            block_user($_SESSION['username'], $_SESSION['uname']);
+          }
+        }
+
+
         header("Location: home.php");
       ?>
     </div>
