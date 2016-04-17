@@ -94,9 +94,8 @@
         }
         $result_row = mysql_fetch_array($result);
         $username = $result_row[0];
-        echo $username;
         ?>
-        <a href="message.php?to=<? $username ?>" class="button">Reply<a/>
+        <a href="message.php?to=<?php echo $username; ?>" class="button">Reply<a/>
       </div>
     </div>
     <div id="footer">
