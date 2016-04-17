@@ -65,6 +65,17 @@ function add_friend($fname1, $fname2){
 	}
 }
 
+function add_to_playlist($playlistid, $mediaid){
+	$fquery = "insert into playlist_media (playlistid, mediaid) values ('".$playlistid."','".$mediaid."');";
+	$fresult = mysql_query($fquery);
+	if(!$fresult){
+		die("add failed.<br />". mysql_error());
+	}
+	else {
+		return 1;
+	}
+}
+
 
 // function comment_by_media($mediaid){
 // 	$query = "select content from comments where media_id=$mediaid";
