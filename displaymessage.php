@@ -12,6 +12,8 @@
 			background-color: black;
 		}
     a.button {
+      size:10;
+      color: orange;
       -webkit-appearance: button;
       -moz-appearance: button;
       appearance: button;
@@ -74,7 +76,7 @@
         $message = $result_row[4];
       ?>
     		<h1>Displaying: <? echo $subject; ?></h1><br/><br/>
-        <? echo $message; ?>
+        <? echo $message; ?><br/><br/>
         <a href="http://google.com" class="button">Button here<a/>
       </div>
     </div>
