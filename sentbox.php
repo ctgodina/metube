@@ -125,7 +125,7 @@
             <a href="message.php?to=<? echo $recuname; ?>"><?php echo $recuname; ?></a>
           </td>        
           <td>
-            <a href="displaymessage.php?id=<? echo $msgid; ?>"><? echo $subj; ?></a>
+            <a href="displaymessage.php?id=<? echo $msgid; ?>&&risme=0"><? echo $subj; ?></a>
           </td>
           <td>
             <?php echo $mesj; ?>
