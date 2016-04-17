@@ -14,15 +14,11 @@
 		 body {
 			background-color: black;
 		}
-    textarea.top{
-      width:100%;
-    }
-    textarea.body{
-      width:100%;
-      height:100px;
-    }
     td {
-      max-width: 100px;
+      max-width: 75%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   </style>
 </head>
