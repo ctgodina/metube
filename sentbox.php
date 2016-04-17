@@ -29,12 +29,12 @@
       Print '<script>alert("User not found");</script>'; //Prompts the user
       Print '<script>window.location.assign("index.php");</script>';
     }
-    if(!empty($_POST['submit'])){
-      if(insert_message($_SESSION['username'], $_POST['receiver'], $_POST['subject'], $_POST['msg'])){
-        Print '<script>alert("Sent message to: '.$_POST['receiver'].'");</script>'; //Prompts the user
-        Print '<script>window.location.assign("message.php");</script>';
-      }
-    }
+    // if(!empty($_POST['submit'])){
+    //   if(insert_message($_SESSION['username'], $_POST['receiver'], $_POST['subject'], $_POST['msg'])){
+    //     Print '<script>alert("Sent message to: '.$_POST['receiver'].'");</script>'; //Prompts the user
+    //     Print '<script>window.location.assign("message.php");</script>';
+    //   }
+    // }
   ?>
   <div id="main">
     <div id="header">
@@ -58,7 +58,6 @@
           <li><a href="browse.php">Browse</a></li>
           <li><a href="upload.php">Upload</a></li>
           <li><a href="message.php">Messages</a></li>
-          <li><a href="playlist.php">Playlists</a></li>
           <li><div class="right"><form action="search.php" method="get"><input type="text" name="search_query" placeholder="search" required><input value="Search" name="submit_search" type="submit" /></form></div></li>
           <li><a href="logout.php">Logout</a></li>
         </ul>
@@ -83,17 +82,70 @@
       </div>
       <div id="content">
         <!-- insert the page content here -->
-        <?php $to=""; if(!empty($_GET['to'])) $to = $_GET['to']; ?>
-		    <h1>Create Message</h1>
-        <textarea class="top" name="receiver" form="sendmsg" placeholder="TO"><? echo $to; ?></textarea>
-        <br></br>
-        <textarea class="top" name="subject" form="sendmsg" placeholder="SUBJECT"></textarea>
-        <br></br>
-        <textarea class="body" name="msg" form="sendmsg" placeholder="ENTER MESSAGE"></textarea>
-        <form method="post" action="message.php" 
-        id="sendmsg">
-          <input name="submit" type="submit">
-        </form>
+		    <h1>Sent Messages</h1>
+       
+        <!-- DISPLAY Sent message subjects -->
+
+
+
+
+
+
+        <?php
+
+        $query = "SELECT receiver, subject, msg from message where sender=";
+        $query.= "(select id from account where username='".$_SESSION['username']."')";
+        $result = mysql_query( $query );
+        if (!$result){
+           die ("Failed to retrieve sent messages: <br />". mysql_error());
+        }
+        ?>
+          
+        <table width="50%" cellpadding="0" cellspacing="0">
+        <tr>
+          <th>Receiver</th>
+          <th>Subject</th>
+          <th>Content</th>
+        </tr>
+        <?php
+          while ($result_row = mysql_fetch_row($result)) 
+          {
+            //Grab receiver from id.
+            $recid = $result_row[0];
+            $subj = $result_row[1];
+            $mesj = $result_row[2];
+
+            $userquery = "SELECT username from account where id = '$recid'";
+            $userresult = mysql_query($userquery);
+            if(!$userresult){
+              die("Retrieving receiver username failed: <br/>". mysql_error());
+            }
+            $recuname = mysql_fetch_row($userresult);
+            $recuname = $recuname[0];
+        ?>
+        <tr valign="top">
+          <td>
+            <a href="message.php?to=<? echo $recuname; ?>"><?php echo $recuname; ?></a>
+          </td>        
+          <td>
+            <?php echo $subj; ?>
+          </td>
+          <td>
+            <?php echo $mesj; ?>
+          </td>
+        </tr>
+              <?php
+          }
+        ?>
+        </table>
+
+
+
+
+
+
+
+
       </div>
     </div>
     <div id="footer">

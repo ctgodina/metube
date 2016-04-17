@@ -58,7 +58,6 @@
           <li><a href="browse.php">Browse</a></li>
           <li><a href="upload.php">Upload</a></li>
           <li><a href="message.php">Messages</a></li>
-          <li><a href="playlist.php">Playlists</a></li>
           <li><div class="right"><form action="search.php" method="get"><input type="text" name="search_query" placeholder="search" required><input value="Search" name="submit_search" type="submit" /></form></div></li>
           <li><a href="logout.php">Logout</a></li>
         </ul>
@@ -83,9 +82,8 @@
       </div>
       <div id="content">
         <!-- insert the page content here -->
-        <?php $to=""; if(!empty($_GET['to'])) $to = $_GET['to']; ?>
-		    <h1>Create Message</h1>
-        <textarea class="top" name="receiver" form="sendmsg" placeholder="TO"><? echo $to; ?></textarea>
+		    <h1>Received Messages</h1>
+        <textarea class="top" name="receiver" form="sendmsg" placeholder="TO"></textarea>
         <br></br>
         <textarea class="top" name="subject" form="sendmsg" placeholder="SUBJECT"></textarea>
         <br></br>
