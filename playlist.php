@@ -61,56 +61,73 @@
         </ul>
       </div>
       <div id="content">
-    <form action="create_playlist.php" method="post" ><input type="text" name="playlist_name" placeholder="Playlist Name" required><input value="Create Playlist" name="submit_create_playlist" type="submit" /></form>
+    <br>
+    <form action="create_playlist.php" method="post" ><input type="text" name="playlist_name" placeholder="Enter Playlist Name" required><input value="Create Playlist" name="submit_create_playlist" type="submit" /></form>
             <!-- insert the page content here -->
-		<h1>Featured Video</h1>
 
-
-		<video width="320" height="240" controls>
-			<source src=<?php echo"'videos/leogoal.mp4'" ?> type="video/mp4">
-			<source src="movie.ogg" type="video/ogg">
-			Your browser does not support the video tag.
-		</video>
     <?php
       $i = 0;
-      $query = "Select fname2 from friends where fname1 = '".$_SESSION['username']."';";
+      $query = "Select * from playlist where username = '".$_SESSION['username']."';";
       $result = mysql_query($query) or die("Could not access friends table".mysql_error());
       while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
-        $mediaid[] = $row[0];
+        $playlistid[] = $row[0];
+        $playlistname[] = $row[1];
         $i++;
       }
     ?>
 
-    <h1>New Content feed</h1>
-    <ul>
-      <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+    <h1>Your Playlists</h1>
+
       <?php
-        /*
-        echo "<div STYLE='height: 500px; width: 400px; font-size: 12px; overflow: auto;'>";
-          $i=0;
-        while($i<count($mediaid)
-        {
-          $query = "SELECT title, username, type, mediaid, path  FROM media WHERE mediaid = '".$mediaid[$i]."' ORDER BY mediaid DESC;";
-          $result = mysql_query($query) or die("Could not access media table".mysql_error());
-          while($row = mysql_fetch_array($result, MYSQL_NUM)){
-            $title = $row[0];
-            $username = $row[1];
-            $type = $row[2];
-            $mediaid = $row[3];
-            $path = $row[4];          
-            echo "  <li>";
-            echo "    <video width='320' height='240' controls>";
-            echo "      <source src=".$path." type =".$type." >";            
-            echo "    </video>";
-            echo "  </li>";
-            echo $title;         
-          }
-          $i++
+      $x=0;
+
+      while($x<count($playlistid) )
+      {
+            echo "</br>";
+            echo "<h3 style='color:orange;'>".$playlistname[$x]."</h3></br>";
+            echo "</br>";
+            $query = "SELECT mediaid  FROM playlist_media WHERE playlistid = '".$playlistid[$x]."' ;";
+            $result = mysql_query($query) or die("Could not access playlist_media table".mysql_error());
+            while($row = mysql_fetch_array($result))
+            {
+              $media_array[]=$row[0];
+              //echo $row[0]."<br>";
+            }
+            
+            echo "<div STYLE='height: 500px; width: 400px; font-size: 12px; overflow: auto;'>";
+            echo "<ul>";
+            if(!empty($media_array))
+            {
+                $i=0;
+                while($i<count($media_array))
+                {
+                  echo $media_array[$i];
+                  $query = "SELECT title, username, type, mediaid, path  FROM media WHERE mediaid = '".$media_array[$i]."' ;";
+                  $result = mysql_query($query) or die("Could not access media table".mysql_error());
+                  while($row = mysql_fetch_array($result, MYSQL_NUM))
+                  {
+                    $title = $row[0];
+                    $username = $row[1];
+                    $type = $row[2];
+                    $mediaid = $row[3];
+                    $path = $row[4];
+
+                    echo "  <li>";
+                    echo "    <video width='320' height='240' controls>";
+                    echo "      <source src=".$path." type =".$type." >";            
+                    echo "    </video>";
+                    echo "  </li>";
+                    echo $title;
+                  }
+                  $i++;
+                }
+            }
+            echo "</ul>";
+            echo "</div>";
+            $x++;
         }
-        echo "</div>";
-        */
       ?>
-    </ul>
+
    
       </div>
     </div>
