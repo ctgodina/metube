@@ -17,6 +17,7 @@
 <body>
   <?php 
     session_start();
+    include_once "function.php";
     if(empty($_SESSION['username'])){
       Print '<script>alert("User not found");</script>'; //Prompts the user
       Print '<script>window.location.assign("index.php");</script>';
@@ -75,6 +76,51 @@
 			<source src="movie.ogg" type="video/ogg">
 			Your browser does not support the video tag.
 		</video>
+    <?php
+      $i = 0;
+      $query = "Select fname2 from friends where fname1 = '".$_SESSION['username']."';";
+      $result = mysql_query($query) or die("Could not access friends table".mysql_error());
+      while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
+        echo $row[0]." <br>";
+        $friendsname[] = $row[0];
+        echo $friendsname[$i]."<br>";
+        $i++;
+      }
+    ?>
+
+    <h1>New Content feed</h1>
+    <ul>
+      <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+      <?php
+        /*$query = "SELECT TOP 1 title, username, type, mediaid, path  FROM media
+                  ORDER BY mediaid DESC;";
+        $result = mysql_query($query) or die("Could not access media table".mysql_error());*/
+
+        echo "<div STYLE='height: 500px; width: 400px; font-size: 12px; overflow: auto;'>";
+          $i=0;
+        while($i<count($friendsname))
+        {
+          $query = "SELECT title, username, type, mediaid, path  FROM media WHERE username = '".$friendsname[$i]."' ORDER BY mediaid DESC LIMIT 1;";
+          $result = mysql_query($query) or die("Could not access media table".mysql_error());
+          while($row = mysql_fetch_array($result, MYSQL_NUM)){
+            $title = $row[0];
+            $username = $row[1];
+            $type = $row[2];
+            $mediaid = $row[3];
+            $path = $row[4];
+          }
+          echo "  <li>";
+          echo "    <video width='320' height='240' controls>";
+          echo "      <source src=".$path." type =".$type." >";            
+          echo "    </video>";
+          echo "  </li>";
+          echo $title." by ".$friendsname[$i];
+
+          $i++;
+        }
+        echo "</div>";
+      ?>
+    </ul>
    
       </div>
     </div>
