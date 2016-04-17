@@ -79,7 +79,7 @@
         <h1>Received Messages</h1>
        
         <?php
-        $query = "SELECT sender, subject, msg from message where receiver=";
+        $query = "SELECT id, sender, subject, msg from message where receiver=";
         $query.= "(select id from account where username='".$_SESSION['username']."')";
         $result = mysql_query( $query );
         if (!$result){
@@ -96,10 +96,10 @@
         <?php
           while ($result_row = mysql_fetch_row($result)) 
           {
-            //Grab receiver from id.
-            $sendid = $result_row[0];
-            $subj = $result_row[1];
-            $mesj = $result_row[2];
+            $msgid = $result_row[0];
+            $sendid = $result_row[1];
+            $subj = $result_row[2];
+            $mesj = $result_row[3];
 
             $userquery = "SELECT username from account where id = '$sendid'";
             $userresult = mysql_query($userquery);
@@ -114,7 +114,7 @@
             <a href="message.php?to=<? echo $sdruname; ?>"><?php echo $sdruname; ?></a>
           </td>        
           <td>
-            <?php echo $subj; ?>
+            <a href="displaymessage.php?id=<? echo $msgid; ?>"><? echo $subj; ?></a>
           </td>
           <td>
             <?php echo $mesj; ?>
