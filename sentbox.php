@@ -15,7 +15,7 @@
 			background-color: black;
 		}
     td {
-      max-width: 75%;
+      max-width: 200px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
