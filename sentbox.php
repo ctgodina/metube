@@ -125,13 +125,13 @@
         ?>
         <tr valign="top">
           <td>
-            <a><?php echo $recuname; ?></a>
+            <a href="message.php?to=$recuname"><?php echo $recuname; ?></a>
           </td>        
           <td>
-            <a><?php echo $subj; ?></a>
+            <?php echo $subj; ?>
           </td>
           <td>
-            <a><?php echo $mesj; ?><a>
+            <?php echo $mesj; ?>
           </td>
         </tr>
               <?php

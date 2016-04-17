@@ -82,8 +82,9 @@
       </div>
       <div id="content">
         <!-- insert the page content here -->
+        <?php $to="DEFAULT"; if(!empty($_GET['to'])) $to = $_GET['to']; ?>
 		    <h1>Create Message</h1>
-        <textarea class="top" name="receiver" form="sendmsg" placeholder="TO"></textarea>
+        <textarea class="top" name="receiver" form="sendmsg" placeholder="TO"><? echo $to; ?></textarea>
         <br></br>
         <textarea class="top" name="subject" form="sendmsg" placeholder="SUBJECT"></textarea>
         <br></br>
