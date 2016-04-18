@@ -85,48 +85,50 @@
       $x=0;
 
       while($x<count($playlistid) )
-      {
+      {     
+
             echo "</br>";
-            echo "<h3 style='color:orange;'>".$playlistname[$x]."</h3></br>";
+            echo "<h3 style='color:orange;'>".$playlistname[$x]." </h3></br>";
             echo "</br>";
             $query = "SELECT mediaid  FROM playlist_media WHERE playlistid = '".$playlistid[$x]."' ;";
             $result = mysql_query($query) or die("Could not access playlist_media table".mysql_error());
             while($row = mysql_fetch_array($result))
             {
               $media_array[]=$row[0];
-              //echo $row[0]."<br>";
             }
             
             echo "<div STYLE='height: 500px; width: 400px; font-size: 12px; overflow: auto;'>";
             echo "<ul>";
-            if(!empty($media_array))
-            {
-                $i=0;
-                while($i<count($media_array))
-                {
-                  echo $media_array[$i];
-                  $query = "SELECT title, username, type, mediaid, path  FROM media WHERE mediaid = '".$media_array[$i]."' ;";
-                  $result = mysql_query($query) or die("Could not access media table".mysql_error());
-                  while($row = mysql_fetch_array($result, MYSQL_NUM))
-                  {
-                    $title = $row[0];
-                    $username = $row[1];
-                    $type = $row[2];
-                    $mediaid = $row[3];
-                    $path = $row[4];
 
-                    echo "  <li>";
-                    echo "    <video width='320' height='240' controls>";
-                    echo "      <source src=".$path." type =".$type." >";            
-                    echo "    </video>";
-                    echo "  </li>";
-                    echo $title;
-                  }
-                  $i++;
+              $i=0;
+              while($i<count($media_array))
+              {
+
+                $query = "SELECT title, username, type, mediaid, path  FROM media WHERE mediaid = '".$media_array[$i]."' ;";
+
+                $result = mysql_query($query) or die("Could not access media table".mysql_error());
+                while($row = mysql_fetch_array($result, MYSQL_NUM))
+                {
+                  $title = $row[0];
+                  $username = $row[1];
+                  $type = $row[2];
+                  $mediaid = $row[3];
+                  $path = $row[4];
+
+                  echo "  <li>";
+                  echo "    <video width='320' height='240' controls>";
+                  echo "      <source src=".$path." type =".$type." >";            
+                  echo "    </video>";
+                  echo "  </li>";
+                  echo $title." by ".$username." </br>";
+                  echo "</br>";
                 }
-            }
+                $i++;
+              }
+
             echo "</ul>";
             echo "</div>";
+            unset($media_array);
             $x++;
         }
       ?>
