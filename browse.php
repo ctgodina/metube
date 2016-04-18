@@ -11,6 +11,37 @@
 		 body {
 			background-color: black;
 		}
+    .rating {
+    float:left;
+    width:300px;
+    }
+    .rating span { float:right; position:relative; }
+    .rating span input {
+        position:absolute;
+        top:0px;
+        left:0px;
+        opacity:0;
+    }
+    .rating span label {
+        display:inline-block;
+        width:30px;
+        height:30px;
+        text-align:center;
+        color:#FFF;
+        background:#ccc;
+        font-size:30px;
+        margin-right:2px;
+        line-height:30px;
+        border-radius:50%;
+        -webkit-border-radius:50%;
+    }
+    .rating span:hover ~ span label,
+    .rating span:hover label,
+    .rating span.checked label,
+    .rating span.checked ~ span label {
+        background:#F90;
+        color:#FFF;
+    }
   </style>
 </head>
 
@@ -48,8 +79,8 @@
           <li><a href="upload.php">Upload</a></li>
           <li><a href="message.php">Messages</a></li>
           <li><a href="playlist.php">Playlists</a></li>
-          <li><div class="right"><form action="search.php" method="get"><input type="text" name="search_query" placeholder="search" required><input value="Search" name="submit_search" type="submit" /></form></div></li>
           <li><a href="groups.php">Groups</a></li>
+          <li><div class="right"><form action="search.php" method="get"><input type="text" name="search_query" placeholder="search" required><input value="Search" name="submit_search" type="submit" /></form></div></li>
           <li><a href="logout.php">Logout</a></li>
         </ul>
       </div>
@@ -110,6 +141,21 @@
         <source src="movie.ogg" type="video/ogg">
         Your browser does not support the video tag.
       </video>
+      <?php
+        
+
+
+
+         /*echo "<form action=>"
+         echo "<div class='rating'>";
+         echo "  <span><input type='radio' name='rating' id='str5' value='5'><label for='str5'></label></span>";
+         echo "  <span><input type='radio' name='rating' id='str4' value='4'><label for='str4'></label></span>";
+         echo "  <span><input type='radio' name='rating' id='str3' value='3'><label for='str3'></label></span>";
+         echo "  <span><input type='radio' name='rating' id='str2' value='2'><label for='str2'></label></span>";
+         echo "  <span><input type='radio' name='rating' id='str1' value='1'><label for='str1'></label></span>";
+         echo "</div>";*/
+      ?>
+
 
 
       <?php  

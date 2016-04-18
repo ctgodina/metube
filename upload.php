@@ -55,20 +55,7 @@
     </div>
     <div id="site_content">
       <div class="sidebar">
-        <!-- insert your sidebar items here -->
-
-        <h3>Suggestions</h3>
-        <ul>
-          <li>coming soon</li>
-
-        </ul>
-        <!--<h3>Search</h3>
-        <form method="post" action="#" id="search_form">
-          <p>
-            <input class="search" type="text" name="search_field" value="Enter keywords....." />
-            <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="style/search.png" alt="Search" title="Search" />
-          </p>
-        </form>-->
+        
       </div>
       <div id="content">
         <!-- insert the page content here -->
@@ -76,6 +63,14 @@
     <form method="post" action="media_upload_process.php" enctype="multipart/form-data" >
 
       Enter Title: <input type="text" name = "title"></input>
+      Select Category:
+      <select name='category'>
+         <option value='funny'>Funny</option>
+         <option value='sports'>Sports</option>
+         <option value='gaming'>Gaming</option>
+         <option value='music'>Music</option>
+         <option value='other'>Other</option>
+      </select>
    
       <p style="margin:0; padding:0">
       <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />

@@ -61,10 +61,9 @@
 		<h1>Featured Video</h1>
 
 		<video width="320" height="240" controls>
-			<source src=<?php echo"'videos/leogoal.mp4'" ?> type="video/mp4">
-			<source src="movie.ogg" type="video/ogg">
-			Your browser does not support the video tag.
+			<source src="videos/newleo.mp4" type ="video/mp4">
 		</video>
+
     <?php
       $i = 0;
       $bool = false;
