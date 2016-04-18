@@ -74,6 +74,14 @@
             unblock_user($_SESSION['username'], $_SESSION['uname']);
             $msg = "Unblocked: ".$_SESSION['uname'];
           }
+          else if(isset($_POST['contactbutton'])){
+            insert_contact($_SESSION['username'], $_SESSION['uname']);
+            $msg = "Added contact: ".$_SESSION['uname'];
+          }
+          else if(isset($_POST['rmcontactbutton'])){
+            remove_contact($_SESSION['username'], $_SESSION['uname']);
+            $msg = "Removed Contact:".$_SESSION['uname'];
+          }
           else if(isset($_POST['chpwdbutton'])){
             $code = change_password($_SESSION['username'], $_POST['opwd'], $_POST['npwd1'], $_POST['npwd2']);
             $loc = "editprofile.php";

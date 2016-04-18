@@ -31,3 +31,8 @@ delimiter ;
 CREATE UNIQUE INDEX uniqueblocks 
 ON blocked (uname1, uname2)
 /*END INDEX*/
+
+/*UNIQUE INDEX eliminate multiple entries*/
+CREATE UNIQUE INDEX uniquecontacts 
+ON contacts (user1, user2)
+/*END INDEX*/

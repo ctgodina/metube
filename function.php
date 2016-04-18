@@ -29,6 +29,35 @@ function user_exist_check ($username, $password){
 	}
 }
 
+function insert_contact ($owner, $contact){
+	$owner = test_input($owner);
+	$contact = test_input($contact);
+	$query = "insert ignore into contacts (user1, user2) values";
+	$query.= "('".$owner."','".$contact."')";
+	$result = mysql_query($query);
+
+	if(!$result){
+		die("insert_contact failed.<br />". mysql_error());
+	}
+	else return $result;
+}
+
+function remove_contact($user1, $user2){
+	//friends has a unique index so no duplicate entries allowed
+	//ufindex
+	$user1 = test_input($user1);
+	$user2 = test_input($user2);
+
+	$fquery = "delete from contacts where user1='".$user1."' and user2='".$user2."';";
+	$fresult = mysql_query($fquery);
+	if(!$fresult){
+		die("remove_friend failed.<br />". mysql_error());
+	}
+	else {
+		return 1;
+	}
+}
+
 function change_password($username, $oldpass, $password1, $password2){
 	$username = test_input($username);
 	$oldpass = test_input($oldpass);

@@ -53,6 +53,7 @@
           <li><a href="upload.php">Upload</a></li>
           <li><a href="message.php">Messages</a></li>
           <li><a href="playlist.php">Playlists</a></li>
+          <li><a href="groups.php">Groups</a></li>
           <li><div class="right"><form action="search.php" method="get"><input type="text" name="search_query" placeholder="search" required><input value="Search" name="submit_search" type="submit" /></form></div></li>
           <li><a href="logout.php">Logout</a></li>
         </ul>
@@ -126,7 +127,7 @@
       $query = "select * from blocked where uname1='".$_SESSION['username']."' AND";
       $query.= " uname2='".$_SESSION['uname']."'";
       $result = mysql_query($query);
-      if(!$result) die("viewprofile:127 failed".mysql_error());
+      if(!$result) die("viewprofile:129 failed".mysql_error());
       if(mysql_num_rows($result)==0){
         $blockval = "Block";
         $blockname = "blockbutton";
@@ -140,7 +141,7 @@
       $fquery = "select * from friends where fname1='".$_SESSION['username']."' AND";
       $fquery.= " fname2='".$_SESSION['uname']."'";
       $result = mysql_query($fquery);
-      if(!$result) die("viewprofile:141 failed".mysql_error());
+      if(!$result) die("viewprofile:143 failed".mysql_error());
       if(mysql_num_rows($result)==0){
         $friendval = "Add Friend";
         $friendname = "friendbutton";
@@ -148,11 +149,25 @@
       else {
         $friendval = "Remove Friend";
         $friendname = "unfriendbutton";
-      }      
+      } 
+
+      $cquery = "select * from contacts where user1='".$_SESSION['username']."' AND";
+      $cquery.= " user2='".$_SESSION['uname']."'";
+      $result = mysql_query($cquery);
+      if(!$result) die("viewprofile:156 failed".mysql_error());
+      if(mysql_num_rows($result)==0){
+        $contactval = "Add Contact";
+        $contactname = "contactbutton";
+      }
+      else {
+        $contactval = "Remove Contact";
+        $contactname = "rmcontactbutton";
+      }          
       ?>
       
       <input value="<? echo $friendval;?>" name="<? echo $friendname;?>" type="submit">
       <input value="<? echo $blockval;?>" name="<?echo $blockname;?>" type="submit">
+      <input value="<? echo $contactval;?>" name="<?echo $contactname;?>" type="submit">
     </form>
     </div>
    

@@ -48,6 +48,7 @@
           <li><a href="upload.php">Upload</a></li>
           <li><a href="message.php">Messages</a></li>
           <li><a href="playlist.php">Playlists</a></li>
+          <li><a href="groups.php">Groups</a></li>
           <li><div class="right"><form action="search.php" method="get" ><input type="text" name="search_query" placeholder="search" required><input value="Search" name="submit_search" type="submit" /></form></div></li>
           <li><a href="logout.php">Logout</a></li>
         </ul>
@@ -103,6 +104,7 @@
           $i=0;
         while($i<count($friendsname))
         {
+          /*What if friends do not have any media? */
           $query = "SELECT title, username, type, mediaid, path  FROM media WHERE username = '".$friendsname[$i]."' ORDER BY mediaid DESC LIMIT 1;";
           $result = mysql_query($query) or die("Could not access media table".mysql_error());
           while($row = mysql_fetch_array($result, MYSQL_NUM)){

@@ -61,6 +61,7 @@
           <li><a href="upload.php">Upload</a></li>
           <li><a href="message.php">Messages</a></li>
           <li><a href="playlist.php">Playlists</a></li>
+          <li><a href="groups.php">Groups</a></li>
           <li><div class="right"><form action="search.php" method="get"><input type="text" name="search_query" placeholder="search" required><input value="Search" name="submit_search" type="submit" /></form></div></li>
           <li><a href="logout.php">Logout</a></li>
         </ul>

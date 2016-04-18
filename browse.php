@@ -49,6 +49,7 @@
           <li><a href="message.php">Messages</a></li>
           <li><a href="playlist.php">Playlists</a></li>
           <li><div class="right"><form action="search.php" method="get"><input type="text" name="search_query" placeholder="search" required><input value="Search" name="submit_search" type="submit" /></form></div></li>
+          <li><a href="groups.php">Groups</a></li>
           <li><a href="logout.php">Logout</a></li>
         </ul>
       </div>
@@ -180,7 +181,7 @@
     <table width="50%" cellpadding="0" cellspacing="0">
     <tr>
       <th>Username</th>
-      <th>Actions</th>
+      <th colspan="2" style="text-align:center">Actions</th>
     </tr>
     <?php
     $query = "SELECT * from friends where fname1='".$_SESSION['username']."'";
@@ -193,6 +194,8 @@
     <tr>
       <td><a href="viewprofile.php?uname=<?php echo $friend;?>"><?echo $friend; ?></a></td>
       <td><a href="message.php?to=<? echo $friend; ?>">Send Message</a></td>
+      <td><a href="viewprofile.php?uname=<?php echo $friend;?>" title="This can be done using buttons in the 
+        profile of the user">Add/Remove/Block from List</a></td>
     </tr>
 
     <?php  
