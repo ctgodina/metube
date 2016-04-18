@@ -52,30 +52,44 @@
       </div>
     </div>
     <div id="site_content">
-    <h1> Added to friends </h1>
+    <h1> Request Handler </h1>
       <?php 
-        // add_friend($_SESSION['username'],$_SESSION['uname']);
-
-
+      $msg = "";
+      $loc = "home.php";
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           if (isset($_POST['friendbutton'])) {
-          // adding friend
             add_friend($_SESSION['username'], $_SESSION['uname']);
+            $msg = "Added Friend: ".$_SESSION['username'];
           } 
           else if(isset($_POST['blockbutton'])) {
           //assume blocking friend
             block_user($_SESSION['username'], $_SESSION['uname']);
+            $msg = "Blocked user: ".$_SESSION['uname'];
           }
           else if(isset($_POST['unfriendbutton'])){
             remove_friend($_SESSION['username'], $_SESSION['uname']);
+            $msg = "Removed Friend: ".$_SESSION['uname'];
           }
           else if(isset($_POST['unblockbutton'])){
             unblock_user($_SESSION['username'], $_SESSION['uname']);
+            $msg = "Unblocked: ".$_SESSION['uname'];
           }
+          else if(isset($_POST['chpwdbutton'])){
+            $code = change_password($_SESSION['username'], $_POST['opwd'], $_POST['npwd1'], $_POST['npwd2']);
+            $loc = "editprofile.php";
+            if($code == -1){
+              $msg = "Incorrect password";
+            }
+            else if($code == -2){
+              $msg = "Passwords don\'t match";
+            }
+            else {
+              $msg = "Changed Password!";
+            }
+          }
+          Print '<script>alert("'.$msg.'");</script>';
+          Print '<script>window.location.assign("'.$loc.'");</script>';
         }
-
-
-        header("Location: home.php");
       ?>
     </div>
     <div id="footer">

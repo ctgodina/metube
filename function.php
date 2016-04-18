@@ -29,6 +29,33 @@ function user_exist_check ($username, $password){
 	}
 }
 
+function change_password($username, $oldpass, $password1, $password2){
+	$username = test_input($username);
+	$oldpass = test_input($oldpass);
+	$password1 = test_input($password1);
+	$password2 = test_input($password2);
+
+	//Check if both passwords dont match
+	if(strcmp($password1, $password2)){
+		return -2;
+	}
+
+	//Check if old password is right 
+	$query = "select password from account where username='$username'";
+	$result = mysql_query($query);
+	if(!$result) die("error changing pass.".mysql_error());
+	$row = mysql_fetch_array($result);
+
+	if(strcmp($row[0], $oldpass)){//not zero is wrong
+		return -1;
+	}
+	else { //0 so correct
+		$query = "update account set password='$password1' where username='$username'";
+		$result = mysql_query($query);
+		if(!$result) die("error changing pass.".mysql_error());
+	}
+}
+
 function fetch_message($msgid){
 	$msgid = test_input($msgid);
 
@@ -39,6 +66,30 @@ function fetch_message($msgid){
 		die("fetch_message failed.<br />". mysql_error());
 	}
 	else return $result;
+}
+
+//erase from messages where user is blocked or user blocked someone
+function delete_spam($user){
+	//grab entries where user is either blocked or did the blocking
+	$query = "select * from blocked where uname1='".$user."'";
+	$query.= " or uname2='".$user."';";
+	$result = mysql_query($query);
+	if(!$result){
+		die("delete_spam failed.<br />". mysql_error());
+	}
+
+	while($result_row = mysql_fetch_array($result)){
+		$uname1 = $result_row[1];
+		$uname2 = $result_row[2];
+		//sender is blocked or receiver is blocked. test for both orderings
+		$delquery = "delete from message where sender=";
+		$delquery.= "(select id from account where username='$uname1') or ";
+		$delquery.= "sender=(select id from account where username='$uname2') or ";
+		$delquery.= "receiver=(select id from account where username='$uname1') or ";
+		$delquery.= "receiver=(select id from account where username='$uname2');";
+		$delresult = mysql_query($delquery);
+		if(!$delresult) die("delete_spam,deleting failed. <br/>".mysql_error());
+	}
 }
 
 function insert_comment($mediaid, $username, $comment){
