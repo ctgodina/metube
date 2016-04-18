@@ -115,7 +115,6 @@
           echo "<form method='post' action= 'add_to_playlist.php?&&mediaid=".$mediaid."'> ";
           $Pquery = "select * from playlist where username = '".$_SESSION['username']."';";
           $Presult = mysql_query($Pquery) or die ("Could not access playlist table".mysql_error());
-          $i=0;
           echo "<select name='playlistid'>";
           while($row = mysql_fetch_array($Presult) )
           {
@@ -172,7 +171,6 @@
                 echo "<form method='post' action= 'add_to_playlist.php?&&mediaid=".$mediaid."'> ";
                 $Pquery = "select * from playlist where username = '".$_SESSION['username']."';";
                 $Presult = mysql_query($Pquery) or die ("Could not access playlist table".mysql_error());
-                $i=0;
                 echo "<select name='playlistid'>";
                 while($row = mysql_fetch_array($Presult) )
                 {
