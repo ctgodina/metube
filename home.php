@@ -55,22 +55,7 @@
       </div>
     </div>
     <div id="site_content">
-      <div class="sidebar">
-        <!-- insert your sidebar items here -->
-
-        <h3>Suggestions</h3>
-        <ul>
-          <li>coming soon</li>
-
-        </ul>
-        <!--<h3>Search</h3>
-        <form method="post" action="#" id="search_form">
-          <p>
-            <input class="search" type="text" name="search_field" value="Enter keywords....." />
-            <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="style/search.png" alt="Search" title="Search" />
-          </p>
-        </form>-->
-      </div>
+      
       <div id="content">
         <!-- insert the page content here -->
 		<h1>Featured Video</h1>
@@ -113,6 +98,7 @@
             $type = $row[2];
             $mediaid = $row[3];
             $path = $row[4];
+            $suggestions_array[] = $title;
           }
           echo "  <li>";
           echo "    <video width='320' height='240' controls>";
@@ -127,8 +113,50 @@
     <?php
       }      
     ?>
-    </ul>
-   
+    </ul>   
+      </div>
+      <div class="sidebar">
+        <!-- insert your sidebar items here -->
+        <h3>Suggestions</h3>
+        <ul>
+         <?php
+          if($bool)
+          {
+            echo "<div STYLE='height: 900px; width: 400px; font-size: 12px; overflow: auto;'>";
+              $i=0;
+            while($i<count($suggestions_array))
+            {
+              $j=0;
+              $suggestion ="";
+              $pieces = explode(" ", $suggestions_array[$i]);
+              while($j<count($pieces))
+              {
+                $suggestion = $pieces[$j]."%";
+                $query = "SELECT title, username, type, mediaid, path  FROM media WHERE title LIKE '%".$suggestion."' ;";
+                $result = mysql_query($query) or die("Could not access media table".mysql_error());
+                while($row = mysql_fetch_array($result, MYSQL_NUM))
+                {
+                  $title = $row[0];
+                  $username = $row[1];
+                  $type = $row[2];
+                  $mediaid = $row[3];
+                  $path = $row[4];
+                }
+                echo "  <li>";
+                echo "    <video width='160' height='120' controls>";
+                echo "      <source src=".$path." type =".$type." >";            
+                echo "    </video>";
+                echo "  </li>";
+                echo $title." <br>";
+                echo " <br>";
+                $j++;
+              }       
+              $i++;
+            }
+            echo "</div>";
+          }      
+        ?>
+        </ul>
       </div>
     </div>
     <div id="footer">
