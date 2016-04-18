@@ -27,6 +27,7 @@ if(isset($_POST['submit'])) {
 			}
 			else if($check==1){
 				$_SESSION['username']=$_POST['username']; //Set the $_SESSION['username']
+				`echo "This executed"; >> ~/phpbash`;
 				header('Location: browse.php');
 			}		
 		}

@@ -136,9 +136,8 @@
       <div id="content">
         <!-- insert the page content here -->
 		  <h1>Now Watching <?php if(!empty($_GET['title'])) echo $_GET['title'] ?></h1>
-      <video width="320" height="240" controls>
-        <source src=<?php echo $_GET['path'] ?> type=<?php echo $_GET['type'] ?> >
-        <source src="movie.ogg" type="video/ogg">
+      <video width="320" height="240" controls
+        <source src=<?php echo $_GET['path'] ?> type=<?php echo $_GET['type'] ?>>>
         Your browser does not support the video tag.
       </video>
       <?php

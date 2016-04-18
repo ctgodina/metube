@@ -113,11 +113,29 @@
       <div id="content">
         <!-- insert the page content here -->
 		<h1>Now viewing: <?php if(!empty($_GET['title'])) echo $_GET['title'] ?></h1>
-      <video width="320" height="240" controls>
-        <source src=<?php echo $_GET['path'] ?> type=<?php echo $_GET['type'] ?> >
-        <source src="movie.ogg" type="video/ogg">
+      <video width="320" height="240" controls
+      src=<?php echo $_GET['path'] ?> type=<?php echo $_GET['type'] ?>> 
         Your browser does not support the video tag.
       </video>
+
+      <?php
+      //PLAYLIST ADD OPTION
+      if(!empty($_GET['id'])){
+        echo "<form method='post' action= 'add_to_playlist.php?&&mediaid=".$_GET['id']."'> ";
+        $Pquery = "select * from playlist where username = '".$_SESSION['username']."';";
+        $Presult = mysql_query($Pquery) or die ("Could not access playlist table".mysql_error());
+        $i=0;
+        echo "<select name='playlistid'>";
+        while($row = mysql_fetch_array($Presult) )
+        {
+           //echo $row[1]."<br>";
+          echo "<option value='".$row[0]."'>".$row[1]."</option>";
+        }
+        echo  "</select>";
+        echo "<input value='Add to playlist' name='submit_add_to_playlist' type='submit'>";
+        echo "</form>";
+      }
+      ?>
    
 
     <div id="upload result">

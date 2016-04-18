@@ -119,8 +119,8 @@
                         $path = $row[4];
 
                         echo "  <li>";
-                        echo "    <video width='320' height='240' controls>";
-                        echo "      <source src=".$path." type =".$type." >";            
+                        echo "    <video width='320' height='240' controls";
+                        echo "      source src=".$path." type =".$type." >";            
                         echo "    </video>";
                         echo "  </li>";
                         echo $title." by ".$username." </br>";
