@@ -181,10 +181,6 @@
         }
       ?>
     </table>
-
-
-
-
     <h2>User Results</h2>
     <table width="50%" cellpadding="0" cellspacing="0">
       <?php
@@ -195,20 +191,17 @@
           $uname = $result_row[1];
       ?>
       <tr valign="top">     
-        
-        <td>
-          <a href="viewprofile.php?uid=<?php echo $uid; ?>&&uname=<?php echo $uname;?>"><?php echo $uname; ?></a> 
-        </td>        
+          <td><a href="viewprofile.php?uid=<?php echo $uid; ?>&&uname=<?php echo $uname;?>"><?php echo $uname; ?></a></td>
+          <td><a href="message.php?to=<? echo $uname; ?>">Send Message</a></td>
+          <td><a href="viewprofile.php?uname=<?php echo $uname;?>" title="This can be done using buttons in the 
+          profile of the user">Add/Remove/Block from List</a></td>
       </tr>
             <?php
         }
-
       ?>
     </table>
     </div>
-
-
-      </div>
+    </div>
     </div>
     <div id="footer">
       Copyright &copy; Soham Parekh 2016

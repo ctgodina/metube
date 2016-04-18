@@ -86,11 +86,16 @@
 
         echo "<div STYLE='height: 500px; width: 400px; font-size: 12px; overflow: auto;'>";
           $i=0;
-        while($i<count($friendsname))
+          echo $friendsname[0];
+        while($i<count($friendsname)) 
         {
           /*What if friends do not have any media? */
           $query = "SELECT title, username, type, mediaid, path  FROM media WHERE username = '".$friendsname[$i]."' ORDER BY mediaid DESC LIMIT 1;";
           $result = mysql_query($query) or die("Could not access media table".mysql_error());
+
+          //check if friend has no media
+          if(mysql_num_rows($result)==0) { $i++; $bool = false; continue; }
+
           while($row = mysql_fetch_array($result, MYSQL_NUM)){
             $title = $row[0];
             $username = $row[1];
