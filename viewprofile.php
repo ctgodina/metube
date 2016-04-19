@@ -185,9 +185,9 @@
       }          
       ?>
       
-      <input value="<? echo $friendval;?>" name="<? echo $friendname;?>" type="submit">
-      <input value="<? echo $blockval;?>" name="<?echo $blockname;?>" type="submit">
-      <input value="<? echo $contactval;?>" name="<?echo $contactname;?>" type="submit">
+      <input value="<?php  echo $friendval;?>" name="<?php echo $friendname;?>" type="submit">
+      <input value="<?php  echo $blockval;?>" name="<?php echo $blockname;?>" type="submit">
+      <input value="<?php  echo $contactval;?>" name="<?php echo $contactname;?>" type="submit">
     </form>
     </div>
    

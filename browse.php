@@ -237,8 +237,8 @@
       ?>
 
     <tr>
-      <td><a href="viewprofile.php?uname=<?php echo $friend;?>"><?echo $friend; ?></a></td>
-      <td><a href="message.php?to=<? echo $friend; ?>">Send Message</a></td>
+      <td><a href="viewprofile.php?uname=<?php echo $friend;?>"><?php echo $friend; ?></a></td>
+      <td><a href="message.php?to=<?php echo $friend; ?>">Send Message</a></td>
       <td><a href="viewprofile.php?uname=<?php echo $friend;?>" title="This can be done using buttons in the 
         profile of the user">Add/Remove/Block from List</a></td>
     </tr>
@@ -253,7 +253,7 @@
     $categories = grab_categories();
     while($row = mysql_fetch_array($categories)){ 
     ?> 
-      <a href="viewbycategory.php?c=<? echo $row[0]; ?>"><?echo $row[0];?></a>
+      <a href="viewbycategory.php?c=<?php echo $row[0]; ?>"><?php echo $row[0];?></a>
     <?php
     }
     ?>

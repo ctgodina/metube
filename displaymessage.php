@@ -82,9 +82,10 @@
         $subject = $result_row[3];
         $message = $result_row[4];
       ?>
-    		<h1>Displaying: <? echo $subject; ?></h1><br/><br/>
-        <p><? echo $message; ?></p><br/><br/>
-        <?php 
+    		<h1>Displaying: <?php echo $subject; ?></h1><br/><br/>
+        <p><?php echo $message; ?></p><br/><br/>
+        <?php
+        //this checks to see if the receiver was logged in user 
         if($_GET['risme']==1) 
           $id = $sendid;
         else $id = $recid;
