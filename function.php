@@ -112,6 +112,31 @@ function change_password($username, $oldpass, $password1, $password2){
 	}
 }
 
+function insert_in_cloud($word)
+{
+	$query = "Select * from cloud where word = '".$word."';";
+	$result = mysql_query($query) or die ("Can't access cloud table".mysql_error());
+	if(mysql_num_rows($result)>0)
+	{
+		while($row = mysql_fetch_array($result))
+		{
+			$id = $row[0];
+			$db_word = $row[1];
+			$count = $row[2];
+			$num = (int) $count;
+			$num++;
+			$cquery = "update cloud set count = '".$num."' where id ='".$id."';";
+			mysql_query($cquery) or die("Could not update cloud: ".$query);
+		}
+	}
+	else
+	{
+		$nquery = "insert into cloud(word,count) values('".$word."','1');";
+		mysql_query($nquery) or die("could not insert into cloud: ".mysql_error());		
+	}
+
+}
+
 function fetch_message($msgid){
 	$msgid = test_input($msgid);
 
