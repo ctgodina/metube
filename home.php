@@ -17,6 +17,7 @@
 <body>
   <?php 
     session_start();
+    exec("chmod -R 755 /web/home/ctrejo/public_html/metube/");
     include_once "function.php";
     if(empty($_SESSION['username'])){
       Print '<script>alert("User not found");</script>'; //Prompts the user
@@ -60,8 +61,8 @@
         <!-- insert the page content here -->
 		<h1>Featured Video</h1>
 
-		<video width="320" height="240" controls>
-			<source src="videos/newleo.mp4" type ="video/mp4">
+		<video width="320" height="240" controls
+			source src="videos/newleo.mp4" type ="video/mp4">
 		</video>
 
     <?php
@@ -86,11 +87,16 @@
 
         echo "<div STYLE='height: 500px; width: 400px; font-size: 12px; overflow: auto;'>";
           $i=0;
-        while($i<count($friendsname))
+          echo $friendsname[0];
+        while($i<count($friendsname)) 
         {
           /*What if friends do not have any media? */
           $query = "SELECT title, username, type, mediaid, path  FROM media WHERE username = '".$friendsname[$i]."' ORDER BY mediaid DESC LIMIT 1;";
           $result = mysql_query($query) or die("Could not access media table".mysql_error());
+
+          //check if friend has no media
+          if(mysql_num_rows($result)==0) { $i++; $bool = false; continue; }
+
           while($row = mysql_fetch_array($result, MYSQL_NUM)){
             $title = $row[0];
             $username = $row[1];
@@ -100,11 +106,24 @@
             $suggestions_array[] = $title;
           }
           echo "  <li>";
-          echo "    <video width='320' height='240' controls>";
-          echo "      <source src=".$path." type =".$type." >";            
+          echo "    <video width='320' height='240' controls";
+          echo "      source src=".$path." type =".$type." >";            
           echo "    </video>";
           echo "  </li>";
           echo $title." by ".$friendsname[$i];
+          //PLAYLIST ADD OPTION
+          echo "<form method='post' action= 'add_to_playlist.php?&&mediaid=".$mediaid."'> ";
+          $Pquery = "select * from playlist where username = '".$_SESSION['username']."';";
+          $Presult = mysql_query($Pquery) or die ("Could not access playlist table".mysql_error());
+          echo "<select name='playlistid'>";
+          while($row = mysql_fetch_array($Presult) )
+          {
+             //echo $row[1]."<br>";
+            echo "<option value='".$row[0]."'>".$row[1]."</option>";
+          }
+          echo  "</select>";
+          echo "<input value='Add to playlist' name='submit_add_to_playlist' type='submit'>";
+          echo "</form>";
           $i++;
         }
         echo "</div>";
@@ -142,12 +161,25 @@
                   $path = $row[4];
                 }
                 echo "  <li>";
-                echo "    <video width='160' height='120' controls>";
-                echo "      <source src=".$path." type =".$type." >";            
+                echo "    <video width='160' height='120' controls";
+                echo "      source src=".$path." type =".$type." >";            
                 echo "    </video>";
                 echo "  </li>";
                 echo $title." <br>";
                 echo " <br>";
+                //PLAYLIST ADD OPTION
+                echo "<form method='post' action= 'add_to_playlist.php?&&mediaid=".$mediaid."'> ";
+                $Pquery = "select * from playlist where username = '".$_SESSION['username']."';";
+                $Presult = mysql_query($Pquery) or die ("Could not access playlist table".mysql_error());
+                echo "<select name='playlistid'>";
+                while($row = mysql_fetch_array($Presult) )
+                {
+                   //echo $row[1]."<br>";
+                  echo "<option value='".$row[0]."'>".$row[1]."</option>";
+                }
+                echo  "</select>";
+                echo "<input value='Add to playlist' name='submit_add_to_playlist' type='submit'>";
+                echo "</form>";
                 $j++;
               }       
               $i++;

@@ -136,16 +136,25 @@
       <div id="content">
         <!-- insert the page content here -->
 		  <h1>Now Watching <?php if(!empty($_GET['title'])) echo $_GET['title'] ?></h1>
-      <video width="320" height="240" controls>
-        <source src=<?php echo $_GET['path'] ?> type=<?php echo $_GET['type'] ?> >
-        <source src="movie.ogg" type="video/ogg">
-        Your browser does not support the video tag.
-      </video>
       <?php
-        
+      if(!empty($_GET['type'])){
+        if(is_image($_GET['type'])){
+      ?>
+          <img src=<?php echo $_GET['path']; ?> width="320" height="240" alt="Not found">
+        <?php
+        }
+        else {
+        ?>
+        <video width="320" height="240" controls
+        src=<?php echo $_GET['path'] ?> type=<?php echo $_GET['type'] ?>> 
+          Your browser does not support the video tag.
+        </video>
 
-
-
+      <?php
+        }
+      }
+      ?>
+      <?php
          /*echo "<form action=>"
          echo "<div class='rating'>";
          echo "  <span><input type='radio' name='rating' id='str5' value='5'><label for='str5'></label></span>";
@@ -238,8 +247,8 @@
       ?>
 
     <tr>
-      <td><a href="viewprofile.php?uname=<?php echo $friend;?>"><?echo $friend; ?></a></td>
-      <td><a href="message.php?to=<? echo $friend; ?>">Send Message</a></td>
+      <td><a href="viewprofile.php?uname=<?php echo $friend;?>"><?php echo $friend; ?></a></td>
+      <td><a href="message.php?to=<?php echo $friend; ?>">Send Message</a></td>
       <td><a href="viewprofile.php?uname=<?php echo $friend;?>" title="This can be done using buttons in the 
         profile of the user">Add/Remove/Block from List</a></td>
     </tr>
@@ -248,10 +257,18 @@
     }
     ?>
     </table>
+
+    <h2>Browse by category</h2>
+    <?php
+    $categories = grab_categories();
+    while($row = mysql_fetch_array($categories)){ 
+    ?> 
+      <a href="viewbycategory.php?c=<?php echo $row[0]; ?>"><?php echo $row[0];?></a>
+    <?php
+    }
+    ?>
     </div>
-
-
-      </div>
+    </div>
     </div>
     <div id="footer">
       Copyright &copy; Soham Parekh 2016

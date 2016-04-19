@@ -117,13 +117,31 @@
                         $mediaid = $row[3];
                         $path = $row[4];
 
-                        echo "  <li>";
-                        echo "    <video width='320' height='240' controls>";
-                        echo "      <source src=".$path." type =".$type." >";            
-                        echo "    </video>";
-                        echo "  </li>";
-                        echo $title." by ".$username." </br>";
-                        echo "</br>";
+                        if(!empty($type)){
+                          if(is_image($type)){
+                            echo "<li>";
+                            echo "<img src=\"$path\" width=\"320\" height=\"240\" alt=\"Not found\">";
+                            echo "</li>";
+                            echo $title." by ".$username." </br>";
+                          }
+                          else 
+                          {
+                            echo "<li>";
+                            echo "<video width=\"320\" height=\"240\" controls ".
+                            "src=\"".$path."\" type=\"".$type."\"> 
+                              Your browser does not support the video tag.
+                            </video>";
+                            echo "</li>";
+                            echo $title." by ".$username." </br>";        
+                          }
+                        }
+                        // echo "  <li>";
+                        // echo "    <video width='320' height='240' controls";
+                        // echo "      source src=".$path." type =".$type." >";            
+                        // echo "    </video>";
+                        // echo "  </li>";
+                        // echo $title." by ".$username." </br>";
+                        // echo "</br>";
                       }
                       $i++;
                     }

@@ -110,12 +110,46 @@
       <div id="content">
         <!-- insert the page content here -->
     <h1>Now Watching <?php if(!empty($_GET['title'])) echo $_GET['title'] ?></h1>
-      <video width="320" height="240" controls>
-        <source src=<?php echo $_GET['path'] ?> type=<?php echo $_GET['type'] ?> >
-        <source src="movie.ogg" type="video/ogg">
-        Your browser does not support the video tag.
-      </video>
+      <?php
+      if(!empty($_GET['type'])){
+        if(is_image($_GET['type'])){
+      ?>
+          <img src=<?php echo $_GET['path']; ?> width="320" height="240" alt="Not found">
+        <?php
+        }
+        else {
+        ?>
+        <video width="320" height="240" controls
+        src=<?php echo $_GET['path'] ?> type=<?php echo $_GET['type'] ?>> 
+          Your browser does not support the video tag.
+        </video>
+
+      <?php
+        }
+      }
+      ?>
     <div class="right">
+    <?php
+    //IF VIDEO SELECTED ALLOW ADDING TO PLAYLIST
+    if(!empty($_GET['title']) )
+    {
+      echo "<form method='post' action= 'add_to_playlist.php?&&mediaid=".$_GET['id']."'> ";
+      $query = "select * from playlist where username = '".$_SESSION['username']."';";
+      $result = mysql_query($query) or die ("Could not access playlist table".mysql_error());
+      $i=0;
+      echo "<select name='playlistid'>";
+      while($row = mysql_fetch_array($result) )
+      {
+         //echo $row[1]."<br>";
+        echo "<option value='".$row[0]."'>".$row[1]."</option>";
+      }
+      echo  "</select>";
+      echo "<input value='Add to playlist' name='submit_add_to_playlist' type='submit'>";
+      echo "</form>";
+    }
+    ?>
+
+    <!-- SECTION TO CRUD USER FROM LISTS -->
     <form method="post" action=
         <?php echo "request.php?".
         "id=".$_SESSION['uid'];
@@ -165,9 +199,9 @@
       }          
       ?>
       
-      <input value="<? echo $friendval;?>" name="<? echo $friendname;?>" type="submit">
-      <input value="<? echo $blockval;?>" name="<?echo $blockname;?>" type="submit">
-      <input value="<? echo $contactval;?>" name="<?echo $contactname;?>" type="submit">
+      <input value="<?php  echo $friendval;?>" name="<?php echo $friendname;?>" type="submit">
+      <input value="<?php  echo $blockval;?>" name="<?php echo $blockname;?>" type="submit">
+      <input value="<?php  echo $contactval;?>" name="<?php echo $contactname;?>" type="submit">
     </form>
     </div>
    

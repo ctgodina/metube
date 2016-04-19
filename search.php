@@ -112,12 +112,42 @@
       </div>
       <div id="content">
         <!-- insert the page content here -->
-		<h1>Now viewing: <?php if(!empty($_GET['title'])) echo $_GET['title'] ?></h1>
-      <video width="320" height="240" controls>
-        <source src=<?php echo $_GET['path'] ?> type=<?php echo $_GET['type'] ?> >
-        <source src="movie.ogg" type="video/ogg">
-        Your browser does not support the video tag.
-      </video>
+		<h1>Now viewing: <?php if(!empty($_GET['title'])) echo $_GET['title']; ?></h1>
+      <!--Test to see if the file is a picture of video -->
+      <?php
+      if(!empty($_GET['type'])){
+        if(is_image($_GET['type'])){
+      ?>
+          <img src=<?php echo $_GET['path']; ?> width="320" height="240" alt="Not found">
+        <?php
+        }
+        else {
+        ?>
+        <video width="320" height="240" controls
+        src=<?php echo $_GET['path'] ?> type=<?php echo $_GET['type'] ?>> 
+          Your browser does not support the video tag.
+        </video>
+
+      <?php
+        }
+      }
+      //PLAYLIST ADD OPTION
+      if(!empty($_GET['id'])){
+        echo "<form method='post' action= 'add_to_playlist.php?&&mediaid=".$_GET['id']."'> ";
+        $Pquery = "select * from playlist where username = '".$_SESSION['username']."';";
+        $Presult = mysql_query($Pquery) or die ("Could not access playlist table".mysql_error());
+        $i=0;
+        echo "<select name='playlistid'>";
+        while($row = mysql_fetch_array($Presult) )
+        {
+           //echo $row[1]."<br>";
+          echo "<option value='".$row[0]."'>".$row[1]."</option>";
+        }
+        echo  "</select>";
+        echo "<input value='Add to playlist' name='submit_add_to_playlist' type='submit'>";
+        echo "</form>";
+      }
+      ?>
    
 
     <div id="upload result">
@@ -181,10 +211,6 @@
         }
       ?>
     </table>
-
-
-
-
     <h2>User Results</h2>
     <table width="50%" cellpadding="0" cellspacing="0">
       <?php
@@ -195,20 +221,17 @@
           $uname = $result_row[1];
       ?>
       <tr valign="top">     
-        
-        <td>
-          <a href="viewprofile.php?uid=<?php echo $uid; ?>&&uname=<?php echo $uname;?>"><?php echo $uname; ?></a> 
-        </td>        
+          <td><a href="viewprofile.php?uid=<?php echo $uid; ?>&&uname=<?php echo $uname;?>"><?php echo $uname; ?></a></td>
+          <td><a href="message.php?to=<? echo $uname; ?>">Send Message</a></td>
+          <td><a href="viewprofile.php?uname=<?php echo $uname;?>" title="This can be done using buttons in the 
+          profile of the user">Add/Remove/Block from List</a></td>
       </tr>
             <?php
         }
-
       ?>
     </table>
     </div>
-
-
-      </div>
+    </div>
     </div>
     <div id="footer">
       Copyright &copy; Soham Parekh 2016

@@ -29,6 +29,33 @@ function user_exist_check ($username, $password){
 	}
 }
 
+function substring_before($mainstr, $teststr){
+	$p = strpos($mainstr, $teststr);
+	($p === false ? $out = $mainstr : $out = (substr($mainstr, 0, $p+strlen($teststr))));
+	return $out;
+}
+
+function is_image($type){
+	$type = substring_before($type, "/");
+	return (strcmp($type, "image/")==0);
+}
+
+function grab_categories(){
+	$query = "select distinct category from media";
+	$result = mysql_query($query);
+	if(!$result) die("failed to grab categories".mysql_error());
+	return $result;
+}
+
+
+function filter_category($category){
+	$query = "select * from media where category='$category'";
+	$result = mysql_query($query);
+	if(!$result) die("failed to grab categories".mysql_error());
+	return $result;
+}
+
+
 function insert_contact ($owner, $contact){
 	$owner = test_input($owner);
 	$contact = test_input($contact);
