@@ -122,7 +122,8 @@
           "id=".$_GET['id']."&&".
           "title=".$_GET['title']."&&".
           "path=".$_GET['path']."&&".
-          "type=".$_GET['type'];
+          "type=".$_GET['type']."&&".
+          "upload_date=".$_GET['upload_date'];
           ?> 
         id="comsection">
           <input placeholder="Post Comment" name="submit" type="submit">
@@ -136,8 +137,15 @@
         <!-- insert the page content here -->
 		  <h1>Now Watching <?php if(!empty($_GET['title'])) echo $_GET['title'] ?></h1>
       <?php
-      if(!empty($_GET['type'])){
-        if(is_image($_GET['type'])){
+      if(!empty($_GET['upload_date']))
+      {
+        echo " Uploaded On: ".$_GET['upload_date']."<br>";
+      }
+
+      if(!empty($_GET['type']))
+      {
+        if(is_image($_GET['type']))
+        {
       ?>
           <img src=<?php echo $_GET['path']; ?> width="320" height="240" alt="Not found">
         <?php
@@ -150,7 +158,9 @@
         </video>
 
       <?php
+
         }
+
       }
       ?>
       <?php
@@ -214,11 +224,13 @@
           $filenpath = $result_row[5];
           $title = $result_row[1];
           $type = $result_row[3];
+          $upload_date = $result_row[9];
       ?>
              <tr valign="top">      
         
         <td>
-          <a href="browse.php?id=<?php echo $mediaid; ?>&&title=<?php echo $title;?>&&path=<?php echo $filenpath;?>&&type=<?php echo $type;?>"><?php echo $title;
+          <a href="browse.php?id=<?php echo $mediaid; ?>&&title=<?php echo $title;?>&&path=<?php echo $filenpath;?>&&type=<?php echo $type;?>&&upload_date=<?php echo $upload_date;?>"><?php echo $title;
+
           ?></a> 
         </td>
         <td>
