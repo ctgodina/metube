@@ -136,15 +136,25 @@
       <div id="content">
         <!-- insert the page content here -->
 		  <h1>Now Watching <?php if(!empty($_GET['title'])) echo $_GET['title'] ?></h1>
-      <video width="320" height="240" controls
-        <source src=<?php echo $_GET['path'] ?> type=<?php echo $_GET['type'] ?>>>
-        Your browser does not support the video tag.
-      </video>
       <?php
-        
+      if(!empty($_GET['type'])){
+        if(is_image($_GET['type'])){
+      ?>
+          <img src=<?php echo $_GET['path']; ?> width="320" height="240" alt="Not found">
+        <?php
+        }
+        else {
+        ?>
+        <video width="320" height="240" controls
+        src=<?php echo $_GET['path'] ?> type=<?php echo $_GET['type'] ?>> 
+          Your browser does not support the video tag.
+        </video>
 
-
-
+      <?php
+        }
+      }
+      ?>
+      <?php
          /*echo "<form action=>"
          echo "<div class='rating'>";
          echo "  <span><input type='radio' name='rating' id='str5' value='5'><label for='str5'></label></span>";

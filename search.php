@@ -112,13 +112,25 @@
       </div>
       <div id="content">
         <!-- insert the page content here -->
-		<h1>Now viewing: <?php if(!empty($_GET['title'])) echo $_GET['title'] ?></h1>
-      <video width="320" height="240" controls
-      src=<?php echo $_GET['path'] ?> type=<?php echo $_GET['type'] ?>> 
-        Your browser does not support the video tag.
-      </video>
+		<h1>Now viewing: <?php if(!empty($_GET['title'])) echo $_GET['title']; ?></h1>
+      <!--Test to see if the file is a picture of video -->
+      <?php
+      if(!empty($_GET['type'])){
+        if(is_image($_GET['type'])){
+      ?>
+          <img src=<?php echo $_GET['path']; ?> width="320" height="240" alt="Not found">
+        <?php
+        }
+        else {
+        ?>
+        <video width="320" height="240" controls
+        src=<?php echo $_GET['path'] ?> type=<?php echo $_GET['type'] ?>> 
+          Your browser does not support the video tag.
+        </video>
 
       <?php
+        }
+      }
       //PLAYLIST ADD OPTION
       if(!empty($_GET['id'])){
         echo "<form method='post' action= 'add_to_playlist.php?&&mediaid=".$_GET['id']."'> ";

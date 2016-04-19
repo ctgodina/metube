@@ -29,6 +29,17 @@ function user_exist_check ($username, $password){
 	}
 }
 
+function substring_before($mainstr, $teststr){
+	$p = strpos($mainstr, $teststr);
+	($p === false ? $out = $mainstr : $out = (substr($mainstr, 0, $p+strlen($teststr))));
+	return $out;
+}
+
+function is_image($type){
+	$type = substring_before($type, "/");
+	return (strcmp($type, "image/")==0);
+}
+
 function grab_categories(){
 	$query = "select distinct category from media";
 	$result = mysql_query($query);
