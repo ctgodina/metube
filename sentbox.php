@@ -93,6 +93,8 @@
 
         <?php
 
+        //delete places where the user is either blocked or did the blocking
+        delete_spam($_SESSION['username']);
         $query = "SELECT id, receiver, subject, msg from message where sender=";
         $query.= "(select id from account where username='".$_SESSION['username']."')";
         $result = mysql_query( $query );

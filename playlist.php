@@ -55,14 +55,6 @@
       </div>
     </div>
     <div id="site_content">
-      <div class="sidebar">
-        <!-- insert your sidebar items here -->
-        <h3>Suggestions</h3>
-        <ul>
-          <li>coming soon</li>
-
-        </ul>
-      </div>
       <div id="content">
     <br>
     <form action="create_playlist.php" method="post" ><input type="text" name="playlist_name" placeholder="Enter Playlist Name" required><input value="Create Playlist" name="submit_create_playlist" type="submit" /></form>

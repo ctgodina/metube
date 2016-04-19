@@ -149,27 +149,37 @@ function fetch_message($msgid){
 	else return $result;
 }
 
-//erase from messages where user is blocked or user blocked someone
 function delete_spam($user){
-	//grab entries where user is either blocked or did the blocking
+	//first grab entries where user is doing the block
 	$query = "select * from blocked where uname1='".$user."'";
-	$query.= " or uname2='".$user."';";
 	$result = mysql_query($query);
 	if(!$result){
 		die("delete_spam failed.<br />". mysql_error());
 	}
 
 	while($result_row = mysql_fetch_array($result)){
-		$uname1 = $result_row[1];
-		$uname2 = $result_row[2];
-		//sender is blocked or receiver is blocked. test for both orderings
+		$blockeduser = $result_row[2];
 		$delquery = "delete from message where sender=";
-		$delquery.= "(select id from account where username='$uname1') or ";
-		$delquery.= "sender=(select id from account where username='$uname2') or ";
-		$delquery.= "receiver=(select id from account where username='$uname1') or ";
-		$delquery.= "receiver=(select id from account where username='$uname2');";
+		$delquery.= "(select id from account where username='$blockeduser')";
+		$delquery.= "and receiver=(select id from account where username='$user');";
 		$delresult = mysql_query($delquery);
-		if(!$delresult) die("delete_spam,deleting failed. <br/>".mysql_error());
+		if(!$delresult) die("stage 1 spam delete failed. <br/>".mysql_error());
+	}
+
+	//last check entries where user is blocked
+	$query = "select * from blocked where uname2='".$user."'";
+	$result = mysql_query($query);
+	if(!$result){
+		die("delete_spam failed.<br />". mysql_error());
+	}
+
+	while($result_row = mysql_fetch_array($result)){
+		$blockedby = $result_row[1];
+		$delquery = "delete from message where sender=";
+		$delquery.= "(select id from account where username='$user')";
+		$delquery.= "and receiver=(select id from account where username='$blockedby');";
+		$delresult = mysql_query($delquery);
+		if(!$delresult) die("stage 2 spam delete failed. <br/>".mysql_error());
 	}
 }
 

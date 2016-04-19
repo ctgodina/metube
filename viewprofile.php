@@ -10,8 +10,22 @@
       Print '<script>window.location.assign("index.php");</script>';
     }
     if(!empty($_GET['uname'])){
-    $_SESSION['uname'] = $_GET['uname'];
-    $_SESSION['uid'] = $_GET['uid'];
+      $_SESSION['uname'] = $_GET['uname'];
+      $_SESSION['uid'] = $_GET['uid'];
+    }
+
+    //check if the user is blocked so it won't show up on the list
+    $me = $_SESSION['username'];
+    $them = $_SESSION['uname'];
+    $canview = true;
+    $blockquery = "select * from blocked where (uname1='$me' and uname2='$them')";
+    $blockquery.= "or (uname1='$them' and uname2='$me')";
+    $blockresult = mysql_query($blockquery);
+    if(mysql_num_rows($blockresult) > 0) $canview = false;
+
+    if(!$canview){
+      Print '<script>alert("You are blocked from viewing this")</script>';
+      Print '<script>window.location.assign("home.php");</script>';
     }
   ?>
   <title><?php echo $_SESSION['uname']?>'s Home</title>
@@ -117,12 +131,12 @@
           <img src=<?php echo $_GET['path']; ?> width="320" height="240" alt="Not found">
         <?php
         }
-        else {
+        else{
         ?>
-        <video width="320" height="240" controls
-        src=<?php echo $_GET['path'] ?> type=<?php echo $_GET['type'] ?>> 
-          Your browser does not support the video tag.
-        </video>
+          <video width="320" height="240" controls
+          src=<?php echo $_GET['path'] ?> type=<?php echo $_GET['type'] ?>> 
+            Your browser does not support the video tag.
+          </video>
 
       <?php
         }
