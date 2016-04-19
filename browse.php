@@ -247,10 +247,18 @@
     }
     ?>
     </table>
+
+    <h2>Browse by category</h2>
+    <?php
+    $categories = grab_categories();
+    while($row = mysql_fetch_array($categories)){ 
+    ?> 
+      <a href="viewbycategory.php?c=<? echo $row[0]; ?>"><?echo $row[0];?></a>
+    <?php
+    }
+    ?>
     </div>
-
-
-      </div>
+    </div>
     </div>
     <div id="footer">
       Copyright &copy; Soham Parekh 2016

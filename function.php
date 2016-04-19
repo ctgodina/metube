@@ -29,6 +29,22 @@ function user_exist_check ($username, $password){
 	}
 }
 
+function grab_categories(){
+	$query = "select distinct category from media";
+	$result = mysql_query($query);
+	if(!$result) die("failed to grab categories".mysql_error());
+	return $result;
+}
+
+
+function filter_category($category){
+	$query = "select * from media where category='$category'";
+	$result = mysql_query($query);
+	if(!$result) die("failed to grab categories".mysql_error());
+	return $result;
+}
+
+
 function insert_contact ($owner, $contact){
 	$owner = test_input($owner);
 	$contact = test_input($contact);
