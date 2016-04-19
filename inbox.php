@@ -83,6 +83,7 @@
         <h1>Received Messages</h1>
        
         <?php
+        delete_spam($_SESSION['username']);
         $query = "SELECT id, sender, subject, msg from message where receiver=";
         $query.= "(select id from account where username='".$_SESSION['username']."')";
         $result = mysql_query( $query );
