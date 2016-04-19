@@ -88,8 +88,6 @@
     <div id="site_content">
       <div class="sidebar">
         <!-- insert your sidebar items here -->
-
-        <h3>Comments</h3>
         <ul>
           <li>
             <?php
@@ -99,6 +97,7 @@
               header("Location:browse.php?".$_SERVER['QUERY_STRING']);
             }
             if(!empty($_GET['id'])){
+              echo "<h3>Comments</h3>";
               //display comments from the database
               $query = "select * from comments where media_id =".$_GET['id'].";";
               $result = mysql_query($query);
