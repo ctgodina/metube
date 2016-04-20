@@ -135,11 +135,16 @@
       </div>
       <div id="content">
         <!-- insert the page content here -->
-		  <h1>Now Watching <?php if(!empty($_GET['title'])) echo $_GET['title'] ?></h1>
+		  <h1>Now Watching <?php if(!empty($_GET['title'])) echo $_GET['title']; ?></h1>
       <?php
       if(!empty($_GET['upload_date']))
       {
         echo " Uploaded On: ".$_GET['upload_date']."<br>";
+      }
+      if(!empty($_GET['id']))
+      {
+       echo"Views: ".viewed_media($_GET['id'])."<br>";
+       echo"Rating: ".get_rating($_GET['id'])."<br>";
       }
 
       if(!empty($_GET['type']))
@@ -163,21 +168,8 @@
 
       }
       ?>
-      <?php
-         /*echo "<form action=>"
-         echo "<div class='rating'>";
-         echo "  <span><input type='radio' name='rating' id='str5' value='5'><label for='str5'></label></span>";
-         echo "  <span><input type='radio' name='rating' id='str4' value='4'><label for='str4'></label></span>";
-         echo "  <span><input type='radio' name='rating' id='str3' value='3'><label for='str3'></label></span>";
-         echo "  <span><input type='radio' name='rating' id='str2' value='2'><label for='str2'></label></span>";
-         echo "  <span><input type='radio' name='rating' id='str1' value='1'><label for='str1'></label></span>";
-         echo "</div>";*/
-      ?>
-
-
-
-      <?php  
-
+       
+      <?php 
         if(!empty($_GET['title']) )
         {
           echo "<form method='post' action= 'add_to_playlist.php?&&mediaid=".$_GET['id']."'> ";
@@ -195,6 +187,25 @@
           echo "</form>";
         }
       ?> 
+
+    <br>
+
+     <?php 
+        if(!empty($_GET['title']) )
+        {
+          echo "<form method='post' action= 'enter_rating.php?&&mediaid=".$_GET['id']."'> "; 
+          echo "<select name='rating'>";                      
+          echo "  <option value='1'>1</option>";   
+          echo "  <option value='2'>2</option>";   
+          echo "  <option value='3'>3</option>";   
+          echo "  <option value='4'>4</option>";
+          echo "  <option value='5'>5</option>";          
+          echo "</select>";
+          echo "<input value='Enter Rating' name='submit_rating' type='submit'>";
+          echo "</form>";
+        }
+      ?>    
+
 
     <div id="upload result">
     <?php 
@@ -214,7 +225,7 @@
       }
     ?>
         
-    <h2>Your Videos</h2>
+    <h2>Your Media</h2>
     <table width="50%" cellpadding="0" cellspacing="0">
       <?php
         while ($result_row = mysql_fetch_row($result)) //filename, username, type, mediaid, path
@@ -224,7 +235,7 @@
           $filenpath = $result_row[5];
           $title = $result_row[1];
           $type = $result_row[3];
-          $upload_date = $result_row[9];
+          $upload_date = $result_row[9];          
       ?>
              <tr valign="top">      
         
