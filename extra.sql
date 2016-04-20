@@ -36,3 +36,8 @@ ON blocked (uname1, uname2)
 CREATE UNIQUE INDEX uniquecontacts 
 ON contacts (user1, user2)
 /*END INDEX*/
+
+/*UNIQUE INDEX eliminate multiple entries*/
+CREATE UNIQUE INDEX uniquechannels 
+ON channel (cname1, cname2)
+/*END INDEX*/

@@ -188,6 +188,15 @@
           }      
         ?>
         </ul>
+        <h2>Browse by category</h2>
+        <?php
+        $categories = grab_categories();
+        while($row = mysql_fetch_array($categories)){ 
+        ?> 
+          <a href="viewbycategory.php?c=<?php echo $row[0]; ?>"><?php echo $row[0];?></a>
+        <?php
+        }
+        ?>
       </div>
     </div>
     <div id="footer">

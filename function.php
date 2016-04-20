@@ -125,6 +125,34 @@ function remove_contact($user1, $user2){
 	}
 }
 
+function subscribe_to ($owner, $channel){
+	$owner = test_input($owner);
+	$channel = test_input($channel);
+	$query = "insert ignore into channel (cname1, cname2) values";
+	$query.= "('".$owner."','".$channel."')";
+	$result = mysql_query($query);
+
+	if(!$result){
+		die("insert_contact failed.<br />". mysql_error());
+	}
+	else return $result;
+}
+
+function unsubscribe_from($user1, $user2){
+	$user1 = test_input($user1);
+	$user2 = test_input($user2);
+
+	$fquery = "delete from channel where cname1='".$user1."' and cname2='".$user2."';";
+	$fresult = mysql_query($fquery);
+	if(!$fresult){
+		die("unsubscribe_from failed.<br />". mysql_error());
+	}
+	else {
+		return 1;
+	}	
+}
+
+
 function change_password($username, $oldpass, $password1, $password2){
 	$username = test_input($username);
 	$oldpass = test_input($oldpass);

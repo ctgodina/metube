@@ -82,6 +82,14 @@
             remove_contact($_SESSION['username'], $_SESSION['uname']);
             $msg = "Removed Contact:".$_SESSION['uname'];
           }
+          else if(isset($_POST['subscribebutton'])){
+            subscribe_to($_SESSION['username'], $_SESSION['uname']);
+            $msg = "Subscribed to: ".$_SESSION['uname'];
+          }
+          else if(isset($_POST['unsubscribebutton'])){
+            unsubscribe_from($_SESSION['username'], $_SESSION['uname']);
+            $msg = "Unsubscribed from:".$_SESSION['uname'];
+          }
           else if(isset($_POST['chpwdbutton'])){
             $code = change_password($_SESSION['username'], $_POST['opwd'], $_POST['npwd1'], $_POST['npwd2']);
             $loc = "editprofile.php";
