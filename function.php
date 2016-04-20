@@ -69,6 +69,38 @@ function insert_contact ($owner, $contact){
 	else return $result;
 }
 
+function remove_from_group($username, $groupid){
+	$query = "delete from group_user where groupid=$groupid and userid=";
+	$query.= "(select id from account where username='$username');";
+	$result = mysql_query($query);
+	if(!$result) die("failed to remove from group".mysql_error());
+	return 1;
+}
+
+//as of now just adds user later can make it so goes to a request list
+//then accept the request calls this
+function add_user_to_group($username, $groupid){
+	$query = "insert into group_user (groupid, userid) values (";
+	$query.= "$groupid,";
+	$query.= "(select id from account where username='$username'))";
+	$result = mysql_query($query);
+	if(!$result) die("adding user to group failed: ".mysql_error());
+	return 1;
+}
+
+function add_topic_to_group($topic, $groupid){
+	//first add topic to topics
+	$query = "insert into topics (name) values('$topic')";
+	$result = mysql_query($query);
+	if(!$result) die("adding topic to topics failed".mysql_error());
+
+	$tquery = "insert into group_topic (groupid, topicid) values (";
+	$tquery.= "$groupid, (select id from topics where name='$topic'))";
+	$tresult = mysql_query($tquery);
+	if(!$tresult) die ("adding topic to group failed.".mysql_error());
+}
+
+
 function remove_contact($user1, $user2){
 	//friends has a unique index so no duplicate entries allowed
 	//ufindex
@@ -334,6 +366,22 @@ function user_pass_check($username, $password)
 			return 1; //Checked.
 	}	
 }
+
+
+function make_group($user, $name){
+	//add new group
+	$query = "insert into groups (name) values ('$name')";
+	$result = mysql_query($query);
+	if(!$result) die("making group failed".mysql_error());
+
+	//make sure creator is part of the group users
+	$gquery = "insert into group_user (groupid, userid) values( ";
+	$gquery.= "(select id from groups where name='$name'), ";
+	$gquery.= "(select id from account where username='$user') )";
+	$gresult = mysql_query($gquery);
+	if(!$gquery) die ("make_group failed".mysql_error());
+}
+
 
 function updateMediaTime($mediaid)
 {

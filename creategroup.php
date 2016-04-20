@@ -17,7 +17,6 @@
 <body>
   <?php 
     session_start();
-    include_once "function.php";
     if(empty($_SESSION['username'])){
       Print '<script>alert("User not found");</script>'; //Prompts the user
       Print '<script>window.location.assign("index.php");</script>';
@@ -60,46 +59,11 @@
         
       </div>
       <div id="content">
-		    <h1>My Groups</h1>
-
-        <table>
-          <tr>
-            <th>Name</th>
-            <th colspan="2" style="text-align:center">Actions</th>
-          </tr>
-        <?php
-          $me = $_SESSION['username'];
-          $query = "select groupid from group_user where userid=(select id from account where username='$me')";
-          $result = mysql_query($query);
-          if(!$result) die("failed to grab groups where i belong".mysql_error());
-          while($result_row = mysql_fetch_array($result)){
-            $groupid = $result_row[0];
-            $gquery = "select name from groups where id=$groupid";
-            $gresult = mysql_query($gquery);
-            $group_row = mysql_fetch_array($gresult);
-            $groupname = $group_row[0];
-        ?>
-
-          <tr>
-            <td><a href="viewgroup.php?groupid=<?php echo $groupid; ?>"><?php echo $groupname; ?></a></td>
-            <td>
-              <form method="post" action="request.php?groupid=<?php echo $groupid; ?>">
-                Topic to add:<input type="text" name="topictogroup"></input>
-                <input value="Add Topic" name="addtopicgroupbutton" type="submit"></input>
-                User to invite:<input type="text" name="usertogroup"></input>
-                <input value="Invite User" name="addusergroupbutton" type="submit"/>
-                <input value="Leave group" name="rmgroupbutton" type="submit"/>
-              </form>
-            </td>
-          </tr>
-
-        <?php
-          }
-        ?>
-
-        </table>
-
-        <br/><a href="creategroup.php">create group</a>
+		    <h1>Create a group</h1>
+        <form action="request.php" method="post">
+          Group Name: <input type="text" name="groupname"> </input><br>
+          <input value="Make group" name="cgroupbutton" type="submit">
+        </form>
       </div>
     </div>
 
