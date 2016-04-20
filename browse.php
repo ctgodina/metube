@@ -225,7 +225,7 @@
       }
     ?>
         
-    <h2>Your Media</h2>
+    <h2>My Channel</h2>
     <table width="50%" cellpadding="0" cellspacing="0">
       <?php
         while ($result_row = mysql_fetch_row($result)) //filename, username, type, mediaid, path
@@ -280,15 +280,31 @@
     ?>
     </table>
 
-    <h2>Browse by category</h2>
+    <h2>My Subscriptions</h2>
+    <table width="50%" cellpadding="0" cellspacing="0">
+    <tr>
+      <th>Channel</th>
+      <th colspan="2" style="text-align:center">Actions</th>
+    </tr>
     <?php
-    $categories = grab_categories();
-    while($row = mysql_fetch_array($categories)){ 
-    ?> 
-      <a href="viewbycategory.php?c=<?php echo $row[0]; ?>"><?php echo $row[0];?></a>
-    <?php
+    $cquery = "SELECT * from channel where cname1='".$_SESSION['username']."'";
+    $cresult = mysql_query($cquery);
+
+    while($cresult_row = mysql_fetch_array($cresult)){
+      $channel = $cresult_row[1];
+      ?>
+
+    <tr>
+      <td><a href="viewprofile.php?uname=<?php echo $channel;?>"><?php echo $channel; ?></a></td>
+      <td><a href="viewprofile.php?uname=<?php echo $friend;?>" title="This can be done using buttons in the 
+        channel of the user">Add/Remove/Block from List</a></td>
+    </tr>
+
+    <?php  
     }
     ?>
+    </table>
+
     </div>
     </div>
     </div>

@@ -228,6 +228,7 @@
         $friendname = "unfriendbutton";
       } 
 
+      //CHECK IF CONTACT
       $cquery = "select * from contacts where user1='".$_SESSION['username']."' AND";
       $cquery.= " user2='".$_SESSION['uname']."'";
       $result = mysql_query($cquery);
@@ -239,12 +240,28 @@
       else {
         $contactval = "Remove Contact";
         $contactname = "rmcontactbutton";
-      }          
+      }
+
+      //CHECK IF SUBSCRIBED
+      $chquery = "select * from channel where cname1='".$_SESSION['username']."' AND";
+      $chquery.= " cname2='".$_SESSION['uname']."'";
+      $chresult = mysql_query($chquery);
+      if(!$chresult) die("viewprofile:156 failed".mysql_error());
+      if(mysql_num_rows($chresult)==0){
+        $channelval = "Subscribe";
+        $channelname = "subscribebutton";
+      }
+      else {
+        $channelval = "Unsubscribe";
+        $channelname = "unsubscribebutton";
+      } 
+
       ?>
       
       <input value="<?php  echo $friendval;?>" name="<?php echo $friendname;?>" type="submit">
       <input value="<?php  echo $blockval;?>" name="<?php echo $blockname;?>" type="submit">
       <input value="<?php  echo $contactval;?>" name="<?php echo $contactname;?>" type="submit">
+      <input value="<?php  echo $channelval;?>" name="<?php echo $channelname;?>" type="submit">
     </form>
     </div>
    

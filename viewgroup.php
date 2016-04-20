@@ -78,27 +78,27 @@
             $trow = mysql_fetch_array($tresult);
             $topicname = $trow[0];
         ?>
-            <tr><td><?php echo $topicname; ?></td></tr>
+            <tr><td><a href="viewtopic.php?topicid=<?php echo $topicid; ?>">
+              <?php echo $topicname; ?></a></td></tr>
 
         <?php
           }
         ?>
-        </tr>
       </table>   
       <h1>Users</h1>
       <table>
         <tr><th>Name</th></tr>
         <?php 
-          $query = "select userid from group_user where groupid=$groupid";
-          $result = mysql_query($query);
+          $uquery = "select userid from group_user where groupid=$groupid";
+          $uresult = mysql_query($uquery);
           if(!$result) die("failed to grab topics".mysql_error());
-          while($row = mysql_fetch_array($result)){
-            $userid=$row[0];
-            $tquery = "select username from account where id=$userid";
-            $tresult = mysql_query($tquery);
-            if(!$tresult) die ("failed to display user".mysql_error());
-            $trow = mysql_fetch_array($tresult);
-            $username = $trow[0];
+          while($urow = mysql_fetch_array($uresult)){
+            $userid=$urow[0];
+            $utquery = "select username from account where id=$userid";
+            $utresult = mysql_query($utquery);
+            if(!$utresult) die ("failed to ".$utquery.$userid.mysql_error());
+            $utrow = mysql_fetch_array($utresult);
+            $username = $utrow[0];
         ?>
             <tr><td><?php echo $username; ?></td></tr>
 
@@ -108,7 +108,9 @@
       </table>  
       <!--Invite user to this group-->
       <form method="post" action="request.php?groupid=<?php echo $groupid; ?>">
-        User to invite:<input type="text" name="usertogroup"></input>
+        User to invite:<input type="text" name="usertogroup"></input><br/>
+        Topic to add:<input type="text" name="topictogroup"></input><br/>
+        <input value="Add Topic" name="addtopicgroupbutton" type="submit"></input>
         <input value="Invite User" name="addusergroupbutton" type="submit"/>
         <input value="Leave group" name="rmgroupbutton" type="submit"/>
       </form>   
