@@ -125,6 +125,17 @@
         <!-- insert the page content here -->
     <h1>Now Watching <?php if(!empty($_GET['title'])) echo $_GET['title'] ?></h1>
       <?php
+
+      if(!empty($_GET['upload_date']))
+      {
+        echo " Uploaded On: ".$_GET['upload_date']."<br>";
+      }
+      if(!empty($_GET['id']))
+      {
+       echo"Views: ".viewed_media($_GET['id'])."<br>";
+       echo"Rating: ".get_rating($_GET['id'])."<br>";
+      }
+
       if(!empty($_GET['type'])){
         if(is_image($_GET['type'])){
       ?>
@@ -162,6 +173,24 @@
       echo "</form>";
     }
     ?>
+
+    <br>
+
+     <?php 
+        if(!empty($_GET['title']) )
+        {
+          echo "<form method='post' action= 'enter_rating.php?&&mediaid=".$_GET['id']."'> "; 
+          echo "<select name='rating'>";                      
+          echo "  <option value='1'>1</option>";   
+          echo "  <option value='2'>2</option>";   
+          echo "  <option value='3'>3</option>";   
+          echo "  <option value='4'>4</option>";
+          echo "  <option value='5'>5</option>";          
+          echo "</select>";
+          echo "<input value='Enter Rating' name='submit_rating' type='submit'>";
+          echo "</form>";
+        }
+      ?> 
 
     <!-- SECTION TO CRUD USER FROM LISTS -->
     <form method="post" action=
