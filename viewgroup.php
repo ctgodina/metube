@@ -42,7 +42,6 @@
 
       <div id="menubar">
         <ul id="menu">
-          <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
           <li class="selected"><a href="home.php">Home</a></li>
           <li><a href="browse.php">Browse</a></li>
           <li><a href="upload.php">Upload</a></li>
@@ -54,57 +53,69 @@
         </ul>
       </div>
     </div>
-
     <div id="site_content">
       <div class="sidebar">
-        
+        <h3>Suggestions</h3>
+        <ul>
+          <li>coming soon</li>
+        </ul>
       </div>
       <div id="content">
-		    <h1>My Groups</h1>
-
-        <table>
-          <tr>
-            <th>Name</th>
-            <th colspan="2" style="text-align:center">Actions</th>
-          </tr>
-        <?php
-          $me = $_SESSION['username'];
-          $query = "select groupid from group_user where userid=(select id from account where username='$me')";
+  		<h1>Topics</h1>
+      <!-- List the topics -->
+      <?php $groupid = $_GET['groupid']; ?>
+      <table>
+        <tr><th>Name</th></tr>
+        <?php 
+          $query = "select topicid from group_topic where groupid=$groupid";
           $result = mysql_query($query);
-          if(!$result) die("failed to grab groups where i belong".mysql_error());
-          while($result_row = mysql_fetch_array($result)){
-            $groupid = $result_row[0];
-            $gquery = "select name from groups where id=$groupid";
-            $gresult = mysql_query($gquery);
-            $group_row = mysql_fetch_array($gresult);
-            $groupname = $group_row[0];
+          if(!$result) die("failed to grab topics".mysql_error());
+          while($row = mysql_fetch_array($result)){
+            $topicid=$row[0];
+            $tquery = "select name from topics where id=$topicid";
+            $tresult = mysql_query($tquery);
+            if(!$tresult) die ("failed to display topic".mysql_error());
+            $trow = mysql_fetch_array($tresult);
+            $topicname = $trow[0];
         ?>
-
-          <tr>
-            <td><a href="viewgroup.php?groupid=<?php echo $groupid; ?>"><?php echo $groupname; ?></a></td>
-            <td>
-              <form method="post" action="request.php?groupid=<?php echo $groupid; ?>">
-                Topic to add:<input type="text" name="topictogroup"></input>
-                <input value="Add Topic" name="addtopicgroupbutton" type="submit"></input>
-                User to invite:<input type="text" name="usertogroup"></input>
-                <input value="Invite User" name="addusergroupbutton" type="submit"/>
-                <input value="Leave group" name="rmgroupbutton" type="submit"/>
-              </form>
-            </td>
-          </tr>
+            <tr><td><?php echo $topicname; ?></td></tr>
 
         <?php
           }
         ?>
+        </tr>
+      </table>   
+      <h1>Users</h1>
+      <table>
+        <tr><th>Name</th></tr>
+        <?php 
+          $query = "select userid from group_user where groupid=$groupid";
+          $result = mysql_query($query);
+          if(!$result) die("failed to grab topics".mysql_error());
+          while($row = mysql_fetch_array($result)){
+            $userid=$row[0];
+            $tquery = "select username from account where id=$userid";
+            $tresult = mysql_query($tquery);
+            if(!$tresult) die ("failed to display user".mysql_error());
+            $trow = mysql_fetch_array($tresult);
+            $username = $trow[0];
+        ?>
+            <tr><td><?php echo $username; ?></td></tr>
 
-        </table>
-
-        <br/><a href="creategroup.php">create group</a>
+        <?php
+          }
+        ?>
+      </table>  
+      <!--Invite user to this group-->
+      <form method="post" action="request.php?groupid=<?php echo $groupid; ?>">
+        User to invite:<input type="text" name="usertogroup"></input>
+        <input value="Invite User" name="addusergroupbutton" type="submit"/>
+        <input value="Leave group" name="rmgroupbutton" type="submit"/>
+      </form>   
       </div>
     </div>
-
     <div id="footer">
-      Copyright &copy; Soham Parekh 2016
+    Copyright &copy; Soham Parekh 2016
     </div>
   </div>
 </body>

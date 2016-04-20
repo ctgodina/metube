@@ -95,6 +95,26 @@
               $msg = "Changed Password!";
             }
           }
+          else if(isset($_POST['cgroupbutton'])){
+            $code = make_group($_SESSION['username'], $_POST['groupname']);
+            $msg = "Created new group: ".$_POST['groupname'];
+            $loc  = "groups.php";
+          }
+          else if(isset($_POST['rmgroupbutton'])){
+            remove_from_group($_SESSION['username'], $_GET['groupid']);
+            $msg = "Removed from groupid: ".$_GET['groupid'];
+            $loc = "groups.php";
+          }
+          else if(isset($_POST['addusergroupbutton'])){
+            add_user_to_group($_POST['usertogroup'], $_GET['groupid']);
+            $msg = "Invited ".$_POST['usertogroup']." to groupid: ".$_GET['groupid'];
+            $loc = "groups.php";
+          }
+          else if(isset($_POST['addtopicgroupbutton'])){
+            add_topic_to_group($_POST['topictogroup'], $_GET['groupid']);
+            $msg = "Added topic ".$_POST['topictogroup']." to groupid: ".$_GET['groupid'];
+            $loc = "viewgroup.php?groupid=".$_GET['groupid'];
+          }
           Print '<script>alert("'.$msg.'");</script>';
           Print '<script>window.location.assign("'.$loc.'");</script>';
         }
