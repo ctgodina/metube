@@ -100,6 +100,14 @@ function add_topic_to_group($topic, $groupid){
 	if(!$tresult) die ("adding topic to group failed.".mysql_error());
 }
 
+function add_post($username, $topicid, $postcontent){
+	$query = "insert into posts (topicid, userid, content) values ";
+	$query.= "($topicid, (select id from account where username='$username'),";
+	$query.= "'$postcontent')";
+	$result = mysql_query($query);
+	if(!$result) die ("adding post failed".mysql_error());
+}
+
 
 function remove_contact($user1, $user2){
 	//friends has a unique index so no duplicate entries allowed
