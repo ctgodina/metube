@@ -60,7 +60,7 @@
       <div class="sidebar">
         <!-- insert your sidebar items here -->
 
-        <h3>Comments</h3>
+        <!--<h3>Comments</h3>-->
         <ul>
           <li>
             <?php
@@ -70,6 +70,7 @@
               header("Location:search.php?".$_SERVER['QUERY_STRING']);
             }
             if(!empty($_GET['id'])){
+              echo "<h3>Comments</h3>";
               //display comments from the database
               $query = "select * from comments where media_id =".$_GET['id'].";";
               $result = mysql_query($query);
@@ -109,6 +110,20 @@
       
           </p>
         </form>-->
+        <h1>Popular Searches</h1>
+        <ul
+          <?php
+            $query = "select word, count from cloud;";
+            $result = mysql_query($query) or die("Could not access cloud table".mysql_error());
+            while($row = mysql_fetch_array($result))
+            {
+              if(10>=(int)$row[1])
+                echo "<li><a href='search.php?search_query=".$row[0]."'><font size ='".$row[1]."' color='orange'>".$row[0]."</font></a></li>";              
+              else
+                echo "<li><a href='search.php?search_query=".$row[0]."'><font size ='11' color='orange'>".$row[0]."</font></a></li>";              
+            }
+          ?>
+        </ul>
       </div>
       <div id="content">
         <!-- insert the page content here -->
@@ -165,13 +180,14 @@
       {
        $query = "SELECT * from media where title LIKE '%".$_GET['search_query']."%';"; 
        $_SESSION['query']=$_GET['search_query'];
+       insert_in_cloud($_SESSION['query']);
        $userquery = "SELECT * from account where username LIKE '%".$_GET['search_query']."%';"; 
-
       }
       else
       {
         $userquery = "SELECT * from account where username LIKE '%".$_SESSION['query']."%';"; 
         $query = "SELECT * from media where title LIKE '%".$_SESSION['query']."%';"; 
+
       }
 
       $result = mysql_query( $query );

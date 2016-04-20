@@ -88,8 +88,6 @@
     <div id="site_content">
       <div class="sidebar">
         <!-- insert your sidebar items here -->
-
-        <h3>Comments</h3>
         <ul>
           <li>
             <?php
@@ -99,6 +97,7 @@
               header("Location:browse.php?".$_SERVER['QUERY_STRING']);
             }
             if(!empty($_GET['id'])){
+              echo "<h3>Comments</h3>";
               //display comments from the database
               $query = "select * from comments where media_id =".$_GET['id'].";";
               $result = mysql_query($query);
@@ -123,7 +122,8 @@
           "id=".$_GET['id']."&&".
           "title=".$_GET['title']."&&".
           "path=".$_GET['path']."&&".
-          "type=".$_GET['type'];
+          "type=".$_GET['type']."&&".
+          "upload_date=".$_GET['upload_date'];
           ?> 
         id="comsection">
           <input placeholder="Post Comment" name="submit" type="submit">
@@ -135,10 +135,22 @@
       </div>
       <div id="content">
         <!-- insert the page content here -->
-		  <h1>Now Watching <?php if(!empty($_GET['title'])) echo $_GET['title'] ?></h1>
+		  <h1>Now Watching <?php if(!empty($_GET['title'])) echo $_GET['title']; ?></h1>
       <?php
-      if(!empty($_GET['type'])){
-        if(is_image($_GET['type'])){
+      if(!empty($_GET['upload_date']))
+      {
+        echo " Uploaded On: ".$_GET['upload_date']."<br>";
+      }
+      if(!empty($_GET['id']))
+      {
+       echo"Views: ".viewed_media($_GET['id'])."<br>";
+       echo"Rating: ".get_rating($_GET['id'])."<br>";
+      }
+
+      if(!empty($_GET['type']))
+      {
+        if(is_image($_GET['type']))
+        {
       ?>
           <img src=<?php echo $_GET['path']; ?> width="320" height="240" alt="Not found">
         <?php
@@ -151,24 +163,13 @@
         </video>
 
       <?php
+
         }
+
       }
       ?>
-      <?php
-         /*echo "<form action=>"
-         echo "<div class='rating'>";
-         echo "  <span><input type='radio' name='rating' id='str5' value='5'><label for='str5'></label></span>";
-         echo "  <span><input type='radio' name='rating' id='str4' value='4'><label for='str4'></label></span>";
-         echo "  <span><input type='radio' name='rating' id='str3' value='3'><label for='str3'></label></span>";
-         echo "  <span><input type='radio' name='rating' id='str2' value='2'><label for='str2'></label></span>";
-         echo "  <span><input type='radio' name='rating' id='str1' value='1'><label for='str1'></label></span>";
-         echo "</div>";*/
-      ?>
-
-
-
-      <?php  
-
+       
+      <?php 
         if(!empty($_GET['title']) )
         {
           echo "<form method='post' action= 'add_to_playlist.php?&&mediaid=".$_GET['id']."'> ";
@@ -186,6 +187,25 @@
           echo "</form>";
         }
       ?> 
+
+    <br>
+
+     <?php 
+        if(!empty($_GET['title']) )
+        {
+          echo "<form method='post' action= 'enter_rating.php?&&mediaid=".$_GET['id']."'> "; 
+          echo "<select name='rating'>";                      
+          echo "  <option value='1'>1</option>";   
+          echo "  <option value='2'>2</option>";   
+          echo "  <option value='3'>3</option>";   
+          echo "  <option value='4'>4</option>";
+          echo "  <option value='5'>5</option>";          
+          echo "</select>";
+          echo "<input value='Enter Rating' name='submit_rating' type='submit'>";
+          echo "</form>";
+        }
+      ?>    
+
 
     <div id="upload result">
     <?php 
@@ -205,7 +225,7 @@
       }
     ?>
         
-    <h2>Your Videos</h2>
+    <h2>Your Media</h2>
     <table width="50%" cellpadding="0" cellspacing="0">
       <?php
         while ($result_row = mysql_fetch_row($result)) //filename, username, type, mediaid, path
@@ -215,11 +235,13 @@
           $filenpath = $result_row[5];
           $title = $result_row[1];
           $type = $result_row[3];
+          $upload_date = $result_row[9];          
       ?>
              <tr valign="top">      
         
         <td>
-          <a href="browse.php?id=<?php echo $mediaid; ?>&&title=<?php echo $title;?>&&path=<?php echo $filenpath;?>&&type=<?php echo $type;?>"><?php echo $title;
+          <a href="browse.php?id=<?php echo $mediaid; ?>&&title=<?php echo $title;?>&&path=<?php echo $filenpath;?>&&type=<?php echo $type;?>&&upload_date=<?php echo $upload_date;?>"><?php echo $title;
+
           ?></a> 
         </td>
         <td>

@@ -92,7 +92,6 @@
               
               echo "<div STYLE='height: 500px; width: 400px; font-size: 12px; overflow: auto;'>";
               echo "<ul>";
-
                 $i=0;
                 if(!empty($media_array))
                 {

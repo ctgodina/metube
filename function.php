@@ -144,6 +144,80 @@ function change_password($username, $oldpass, $password1, $password2){
 	}
 }
 
+function insert_in_cloud($word)
+{
+	$query = "Select * from cloud where word = '".$word."';";
+	$result = mysql_query($query) or die ("Can't access cloud table".mysql_error());
+	if(mysql_num_rows($result)>0)
+	{
+		while($row = mysql_fetch_array($result))
+		{
+			$id = $row[0];
+			$db_word = $row[1];
+			$count = $row[2];
+			$num = (int) $count;
+			$num++;
+			$cquery = "update cloud set count = '".$num."' where id ='".$id."';";
+			mysql_query($cquery) or die("Could not update cloud: ".$query);
+		}
+	}
+	else
+	{
+		$nquery = "insert into cloud(word,count) values('".$word."','1');";
+		mysql_query($nquery) or die("could not insert into cloud: ".mysql_error());		
+	}
+
+}
+
+function viewed_media($id)
+{
+	$query = "Select viewcount from media where mediaid = '".$id."';";
+	$result = mysql_query($query) or die ("Can't access media table ".mysql_error());
+	$inc = 0;
+	if($row = mysql_fetch_array($result))
+	{
+		$count = $row[0];
+		$inc = (int) $count;
+		$inc++;
+		$query = "update media set viewcount = '".$inc."' where mediaid = '".$id."';";
+		mysql_query($query) or die("Could not increase count ".mysql_error());
+	}
+	return $inc;
+}
+
+function entered_rating($id, $value)
+{
+	//echo "Passed: id: ".$id." rating: ".$value."<br>";
+	$query = "Select rating, viewcount from media where mediaid = '".$id."';";
+	$result = mysql_query($query) or die ("Can't access media table ".mysql_error());
+	$currating = 0;
+	$finalrating = 0;
+	while($row = mysql_fetch_array($result))
+	{
+		$rating = $row[0];
+		$count = $row[1];
+		$currating = (double) $rating;
+		$agg = ($currating * $count)+$value;
+		$finalrating = $agg/($count+1);
+		$query = "update media set rating = '".$finalrating."' where mediaid = '".$id."';";
+		mysql_query($query) or die("Could not set rating ".mysql_error());
+	}
+	//echo $finalrating."<br>";
+	//echo "Entered in db: final rating:".$finalrating." views: ".$count." Prev rating: ".$currating;
+}
+
+function get_rating($id)
+{
+	$query = "Select rating from media where mediaid = '".$id."';";
+	$result = mysql_query($query) or die ("Can't access media table ".mysql_error());
+	while($row = mysql_fetch_array($result))
+	{
+		$rating = $row[0];
+	}
+	return $rating;
+}
+
+
 function fetch_message($msgid){
 	$msgid = test_input($msgid);
 
