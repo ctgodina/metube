@@ -284,7 +284,7 @@
       }
     ?>
         
-    <h2><?php echo $_SESSION['uname']?>'s Videos</h2>
+    <h2><?php echo $_SESSION['uname']?>'s Channel</h2>
     <table width="50%" cellpadding="0" cellspacing="0">
       <?php
         while ($result_row = mysql_fetch_row($result)) //filename, username, type, mediaid, path
